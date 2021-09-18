@@ -1,0 +1,22 @@
+.header-container {
+    /* background-color: burlywood; */
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-right {
+    display: flex;
+    flex-direction: row;
+    margin: 0px 20px;
+
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0px 10px;
+
+}
