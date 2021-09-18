@@ -1,15 +1,23 @@
-import { Doctors, Home, Login, Clients, Schedule } from "./../Screen";
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
-import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
-import DateRangeIcon from '@mui/icons-material/DateRange';
+import {
+  Doctors,
+  Home,
+  Login,
+  Clients,
+  Schedule,
+  AddSchedule,
+} from "./../Screen";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
+import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
+import DateRangeIcon from "@mui/icons-material/DateRange";
 export const homePath = "/";
 
 export const loginPath = "/login";
 export const clientsPath = "/clients";
 export const awaitingPath = "/awaiting"
 export const doctorsPath = "/doctors";
-export const schedulesPath = "/schedules"
+export const schedulesPath = "/schedules";
+export const addSchedulesPath = "/add-schedule";
 
 const ROUTES = [
   {
@@ -27,7 +35,7 @@ const ROUTES = [
     visibleInSidebar: true,
     authRequired: true,
     icon: DashboardIcon,
-    exact: true
+    exact: true,
   },
   {
     title: "Doctors",
@@ -36,7 +44,7 @@ const ROUTES = [
     visibleInSidebar: true,
     authRequired: true,
     icon: LocalHospitalIcon,
-    exact: true
+    exact: true,
   },
   {
     title: "Clients",
@@ -45,7 +53,7 @@ const ROUTES = [
     visibleInSidebar: true,
     authRequired: true,
     icon: AssignmentIndIcon,
-    exact: true
+    exact: true,
   },
   {
     title: "Wait List",
@@ -60,7 +68,16 @@ const ROUTES = [
     visibleInSidebar: true,
     authRequired: true,
     icon: DateRangeIcon,
-    exact: true
+    exact: true,
+  },
+  {
+    title: "Add Schedules",
+    path: addSchedulesPath,
+    component: () => <AddSchedule />,
+    visibleInSidebar: false,
+    authRequired: true,
+    icon: DateRangeIcon,
+    exact: true,
   },
 ];
 

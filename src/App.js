@@ -8,12 +8,14 @@ import { Provider } from "react-redux";
 import { store, persistor } from "./Redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { Sidebar } from "./Components";
+
+import "./App.css";
 export default function App() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <Navigation />
       </PersistGate>
-    </Provider >
+    </Provider>
   );
 }
