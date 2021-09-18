@@ -12,7 +12,7 @@ const ROUTES = [
   {
     title: "login",
     path: loginPath,
-    component: Login,
+    component: () => <Login />,
     visibleInSidebar: false,
     authRequired: false,
     icon: DashboardIcon,
@@ -20,7 +20,7 @@ const ROUTES = [
   {
     title: "Home",
     path: homePath,
-    component: Home,
+    component: () => <Home />,
     visibleInSidebar: true,
     authRequired: true,
     icon: DashboardIcon,
@@ -29,7 +29,7 @@ const ROUTES = [
   {
     title: "Doctors",
     path: doctorsPath,
-    component: Doctors,
+    component: () => <Doctors />,
     visibleInSidebar: true,
     authRequired: true,
     icon: LocalHospitalIcon,
@@ -38,7 +38,7 @@ const ROUTES = [
   {
     title: "Clients",
     path: clientsPath,
-    component: Clients,
+    component: () => <Clients />,
     visibleInSidebar: true,
     authRequired: true,
     icon: AssignmentIndIcon,

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
 import { Container, Typography } from "@mui/material";
-import {Header} from './../Components'
+import { Header } from './../Components'
 const Home = () => {
   return (
     <div>
-        <Header title="Home"/>
+      <Header title="Home" />
       <Typography>Home</Typography>
     </div>
   );
