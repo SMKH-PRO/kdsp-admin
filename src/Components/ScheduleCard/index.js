@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from '@mui/styles';
 import DoctorApIcon from "../../Assets/Icons/doctor_appointment.png";
 import { doctorSchedules } from "../../data";
-import "./index.css"
+import { useTheme } from '@mui/material/styles';
+import "./index.css";
+
+
+let cancelled = "Cancelled";
+let completed = "Completed";
+
 
 const useStyles = makeStyles((theme) => ({
     cardLeftLine: {
@@ -26,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
 const ScheduleCard = ({ cardData }) => {
 
     const classes = useStyles();
+    const theme = useTheme();
 
     return (
         <div className="sCardMainDiv">
@@ -49,7 +56,20 @@ const ScheduleCard = ({ cardData }) => {
 
                 <p style={{ margin: "0px", color: 'grey' }}>{`Session of ${cardData?.sessionType} is set with ${cardData?.clientName}`}</p>
 
-                <p className={classes?.timeText}>12:00 - 13:00</p>
+
+                <div className="cardStatusDiv">
+
+                    <p className={classes?.timeText}>12:00 - 13:00</p>
+
+                    <div style={{ display: "flex", alignItems: "center" }}>
+
+                        <p className={classes?.timeText} style={{ display: "flex", alignItems: "center", margin: "0px" }}>Status:
+                            <p style={{ fontWeight: "bold", margin: "0px", color: cardData?.status == cancelled ? "red" : cardData?.status == completed ? "green" : theme?.palette?.primary?.main }}> {cardData?.status}</p>
+                        </p>
+                    </div>
+
+
+                </div>
 
 
             </div>

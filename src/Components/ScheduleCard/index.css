@@ -28,5 +28,11 @@ height: 100%;
     display: flex;
     justify-content: center;
     flex-direction: column;
-    padding:0px 5px
+    padding:0px 5px;
+}
+
+.cardStatusDiv{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

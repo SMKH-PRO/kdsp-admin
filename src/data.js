@@ -6,7 +6,8 @@ const doctorSchedules = [
         endTime: "13:00",
         isDone: false,
         isCancelled: false,
-        sessionType: "Physical Therapy"
+        sessionType: "Physical Therapy",
+        status: "In-Process"
     },
     {
         doctorName: 'Dr John Doe 2',
@@ -15,7 +16,8 @@ const doctorSchedules = [
         endTime: "14:00",
         isDone: false,
         isCancelled: false,
-        sessionType: "Mind Therapy"
+        sessionType: "Mind Therapy",
+        status: "Completed"
     },
     {
         doctorName: 'Dr John Doe 3',
@@ -24,7 +26,8 @@ const doctorSchedules = [
         endTime: "15:00",
         isDone: false,
         isCancelled: false,
-        sessionType: "Behavioral Therapy"
+        sessionType: "Behavioral Therapy",
+        status: "Scheduled"
     },
     {
         doctorName: 'Dr John Doe 4',
@@ -33,7 +36,8 @@ const doctorSchedules = [
         endTime: "16:00",
         isDone: false,
         isCancelled: false,
-        sessionType: "Psychoanalysis Therapy"
+        sessionType: "Psychoanalysis Therapy",
+        status: "Cancelled"
     }
 ]
 
