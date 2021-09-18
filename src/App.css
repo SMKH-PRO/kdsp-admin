@@ -1,8 +1,9 @@
 .content-container {
-  padding: 2px 15px 15px 15px
+  padding: 2px 17px 17px 15px
 }
 
 
 .todayP{
   font-weight: bold;
+  font-size: 20px;
 }

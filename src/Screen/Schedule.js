@@ -21,11 +21,7 @@ const Schedule = () => {
 
 
 
-            <div className="content-container" style={{
-                borderWidth: "2px",
-                borderStyle: "solid",
-                borderColor: "black"
-            }}>
+            <div className="content-container">
 
                 <p className="todayP">Today</p>
 
