@@ -19,7 +19,11 @@ const Schedule = () => {
 
 
 
-            <div className="content-container" style={{ backgroundColor: "red" }}>
+            <div className="content-container" style={{
+                borderWidth: "2px",
+                borderStyle: "solid",
+                borderColor: "black"
+            }}>
                 <Typography>Today</Typography>
 
                 <Grid container spacing={6}>
@@ -32,6 +36,10 @@ const Schedule = () => {
                         <ScheduleCard />
                     </Grid>
 
+
+                    <Grid item xs={4}>
+                        <ScheduleCard />
+                    </Grid>
 
                     <Grid item xs={4}>
                         <ScheduleCard />
