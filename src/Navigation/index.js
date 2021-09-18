@@ -1,9 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Home, Login } from "./../Screen";
+import { Home, Login, NotFound404 } from "./../Screen";
 import { useSelector } from "react-redux";
 import { Sidebar } from "./../Components"
 import ROUTES, { loginPath } from "./routes";
+
+
 const Navigation = () => {
   const currentUser = useSelector((state) => state.userReducer?.currentUser);
   return (
@@ -30,6 +32,9 @@ const Navigation = () => {
             />
           );
         })}
+
+        <Route component={NotFound404} />
+
       </Switch>
     </Router >
   );
