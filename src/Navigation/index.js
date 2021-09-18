@@ -1,8 +1,8 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Home, Login } from "./../Screen";
 import { useSelector } from "react-redux";
-import {Sidebar} from "./../Components"
+import { Sidebar } from "./../Components"
 import ROUTES, { loginPath } from "./routes";
 const Navigation = () => {
   const currentUser = useSelector((state) => state.userReducer?.currentUser);
@@ -15,21 +15,23 @@ const Navigation = () => {
           <Login />
         </Route>
 
-        {ROUTES.map((route) => {
+        {ROUTES.map((route, i) => {
           return (
             <Route
               key={route?.path}
               exact={route?.exact === false ? false : true}
               path={route?.path}
-            >
-              <Sidebar>
-                <route.component {...route} />
-              </Sidebar>
-            </Route>
+              key={i}
+              render={(props) =>
+                <Sidebar key={i} {...props}>
+                  <route.component {...route} {...props} />
+                </Sidebar>
+              }
+            />
           );
         })}
       </Switch>
-    </Router>
+    </Router >
   );
 };
 
