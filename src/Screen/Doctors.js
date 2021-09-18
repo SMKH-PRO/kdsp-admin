@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { Container, Typography, Button } from "@mui/material";
+
+import {  Typography } from "@mui/material";
 
 const Doctor = () => {
   return (
-    <Container>
-      <Button>Add Doctor</Button>
-    </Container>
+      <Typography>Doctor</Typography>
   );
 };
 
