@@ -6,6 +6,7 @@ export const homePath = "/";
 
 export const loginPath = "/login";
 export const clientsPath = "/clients";
+export const awaitingPath = "/awaiting"
 export const doctorsPath = "/doctors";
 
 const ROUTES = [
@@ -38,6 +39,15 @@ const ROUTES = [
   {
     title: "Clients",
     path: clientsPath,
+    component: () => <Clients />,
+    visibleInSidebar: true,
+    authRequired: true,
+    icon: AssignmentIndIcon,
+    exact: true
+  },
+  {
+    title: "awaiting",
+    path: awaitingPath,
     component: () => <Clients />,
     visibleInSidebar: true,
     authRequired: true,
