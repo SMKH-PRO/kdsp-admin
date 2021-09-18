@@ -1,13 +1,15 @@
-import { Doctors, Home, Login, Clients } from "./../Screen";
+import { Doctors, Home, Login, Clients, Schedule } from "./../Screen";
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import DateRangeIcon from '@mui/icons-material/DateRange';
 export const homePath = "/";
 
 export const loginPath = "/login";
 export const clientsPath = "/clients";
 export const awaitingPath = "/awaiting"
 export const doctorsPath = "/doctors";
+export const schedulesPath = "/schedules"
 
 const ROUTES = [
   {
@@ -46,12 +48,18 @@ const ROUTES = [
     exact: true
   },
   {
-    title: "awaiting",
+    title: "Wait List",
     path: awaitingPath,
     component: () => <Clients />,
     visibleInSidebar: true,
     authRequired: true,
     icon: AssignmentIndIcon,
+    title: "Schedules",
+    path: schedulesPath,
+    component: () => <Schedule />,
+    visibleInSidebar: true,
+    authRequired: true,
+    icon: DateRangeIcon,
     exact: true
   },
 ];
