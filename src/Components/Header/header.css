@@ -1,6 +1,6 @@
 .header-container {
     /* background-color: burlywood; */
-    padding: 15px;
+    padding: 25px 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;

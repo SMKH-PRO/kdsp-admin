@@ -4,6 +4,7 @@ import { Container, Typography, IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { Header } from "./../Components";
 const Home = () => {
+    const [modal, setModal] = useState(false)
   return (
     <div>
       <Header

@@ -9,7 +9,7 @@ import LOGO from "./../../Assets/Images/logo.png";
 import { useHistory } from "react-router";
 const SideBar = ({ children, ...props }) => {
   const history = useHistory();
-  const filteredRoute = ROUTES.filter((v) => v.authRequired);
+  const filteredRoute = ROUTES.filter((v) => v.visibleInSidebar);
   return (
     <div className="sidebar-container">
       <div className="sidebar">
