@@ -13,6 +13,12 @@
 
 }
 
+.header-right-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .user-details {
     display: flex;
     flex-direction: column;
