@@ -1,0 +1,10 @@
+.sCardMainDiv{
+background-color: yellow;
+border-radius: 10px;
+}
+
+.sCardLeftDiv{
+    width: 30%;
+height: 150px;
+    background-color: blue;
+}
