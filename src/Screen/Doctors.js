@@ -1,10 +1,24 @@
 import React, { useState } from "react";
+import { makeStyles, createStyles } from '@mui/styles';
+import { Container, Button } from "@mui/material";
 
-import {  Typography } from "@mui/material";
 
-const Doctor = () => {
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    root: {
+      backgroundColor: theme.palette.primary.main
+    },
+  }),
+);
+
+const Doctor = (props) => {
+  const classes = useStyles(props);
   return (
-      <Typography>Doctor</Typography>
+    <div>
+      <div>
+        <Button variant="contained">Add Doctor</Button>
+      </div>
+    </div>
   );
 };
 
