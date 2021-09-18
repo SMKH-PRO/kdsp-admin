@@ -4,6 +4,6 @@ import Doctors from "./Doctors";
 import Clients from "./Clients";
 import Awaiting from './Awaiting';
 import Schedule from "./Schedule";
+import AddDoctor from "./AddDoctor";
 
-export { Home, Login, Doctors, Clients, Awaiting ,Schedule};
-
+export { Home, Login, Doctors, Clients, Schedule, AddDoctor, Awaiting };
