@@ -62,7 +62,7 @@ const doctorsArr = [
   
 ];
 
-const doctorsArr = [
+const doctorsAr = [
     { label: "Doctor A", year: 1994 },
     { label: "Doctor B", year: 1994 },
     { label: "Doctor C", year: 1994 },
