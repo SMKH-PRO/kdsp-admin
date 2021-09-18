@@ -20,4 +20,5 @@
 .flex-column {
   display: flex;
   flex-direction: column;
+  padding: 2px 15px 15px 15px
 }
