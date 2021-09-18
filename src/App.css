@@ -6,4 +6,26 @@
 .todayP{
   font-weight: bold;
   font-size: 20px;
+  padding: 0px 15px
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button-margin {
+  margin: 40px 20px 0 0;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  padding: 2px 15px 15px 15px
 }

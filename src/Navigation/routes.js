@@ -5,6 +5,7 @@ import {
   Clients,
   Schedule,
   AddSchedule,
+  AddDoctor
 } from "./../Screen";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
@@ -16,6 +17,7 @@ export const loginPath = "/login";
 export const clientsPath = "/clients";
 export const awaitingPath = "/awaiting"
 export const doctorsPath = "/doctors";
+export const adddoctorsPath = "/add-doctors";
 export const schedulesPath = "/schedules";
 export const addSchedulesPath = "/add-schedule";
 
@@ -23,7 +25,7 @@ const ROUTES = [
   {
     title: "login",
     path: loginPath,
-    component: () => <Login />,
+    component: (props) => <Login {...props} />,
     visibleInSidebar: false,
     authRequired: false,
     icon: DashboardIcon,
@@ -31,7 +33,7 @@ const ROUTES = [
   {
     title: "Home",
     path: homePath,
-    component: () => <Home />,
+    component: (props) => <Home {...props} />,
     visibleInSidebar: true,
     authRequired: true,
     icon: DashboardIcon,
@@ -40,7 +42,7 @@ const ROUTES = [
   {
     title: "Doctors",
     path: doctorsPath,
-    component: () => <Doctors />,
+    component: (props) => <Doctors {...props} />,
     visibleInSidebar: true,
     authRequired: true,
     icon: LocalHospitalIcon,
@@ -49,7 +51,7 @@ const ROUTES = [
   {
     title: "Clients",
     path: clientsPath,
-    component: () => <Clients />,
+    component: (props) => <Clients {...props} />,
     visibleInSidebar: true,
     authRequired: true,
     icon: AssignmentIndIcon,
@@ -58,13 +60,13 @@ const ROUTES = [
   {
     title: "Wait List",
     path: awaitingPath,
-    component: () => <Clients />,
+    component: (props) => <Clients {...props} />,
     visibleInSidebar: true,
     authRequired: true,
     icon: AssignmentIndIcon,
     title: "Schedules",
     path: schedulesPath,
-    component: () => <Schedule />,
+    component: (props) => <Schedule {...props} />,
     visibleInSidebar: true,
     authRequired: true,
     icon: DateRangeIcon,
@@ -73,7 +75,16 @@ const ROUTES = [
   {
     title: "Add Schedules",
     path: addSchedulesPath,
-    component: () => <AddSchedule />,
+    component: (props) => <AddSchedule {...props} />,
+    visibleInSidebar: false,
+    authRequired: true,
+    icon: DateRangeIcon,
+    exact: true,
+  },
+  {
+    title: "Add Doctor",
+    path: adddoctorsPath,
+    component: (props) => <AddDoctor {...props} />,
     visibleInSidebar: false,
     authRequired: true,
     icon: DateRangeIcon,
