@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { Container, Typography, IconButton, Grid } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { Header, ScheduleCard } from "./../Components";
+import { doctorSchedules } from "../data";
+
 
 
 const Schedule = () => {
@@ -24,28 +26,19 @@ const Schedule = () => {
                 borderStyle: "solid",
                 borderColor: "black"
             }}>
-                <Typography>Today</Typography>
+
+                <p className="todayP">Today</p>
 
                 <Grid container spacing={6}>
 
-                    <Grid item xs={4}>
-                        <ScheduleCard />
-                    </Grid>
+                    {doctorSchedules.map((d, i) => {
+                        return <Grid item xs={4}>
+                            <ScheduleCard cardData={d} />
+                        </Grid>
 
-                    <Grid item xs={4}>
-                        <ScheduleCard />
-                    </Grid>
-
-
-                    <Grid item xs={4}>
-                        <ScheduleCard />
-                    </Grid>
-
-                    <Grid item xs={4}>
-                        <ScheduleCard />
-                    </Grid>
-
+                    })}
                 </Grid>
+
 
             </div>
         </div>

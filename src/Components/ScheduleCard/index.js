@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from '@mui/styles';
 import DoctorApIcon from "../../Assets/Icons/doctor_appointment.png";
+import { doctorSchedules } from "../../data";
 import "./index.css"
 
 const useStyles = makeStyles((theme) => ({
@@ -22,8 +23,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const ScheduleCard = () => {
-
+const ScheduleCard = ({ cardData }) => {
 
     const classes = useStyles();
 
@@ -45,9 +45,9 @@ const ScheduleCard = () => {
             <div className="sCardRightDiv">
 
 
-                <p style={{ margin: "0px", fontWeight: "bold" }}>Dr John Doe</p>
+                <p style={{ margin: "0px", fontWeight: "bold" }}>{cardData?.doctorName}</p>
 
-                <p style={{ margin: "0px", color: 'grey' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <p style={{ margin: "0px", color: 'grey' }}>{`Session of ${cardData?.sessionType} is set with ${cardData?.clientName}`}</p>
 
                 <p className={classes?.timeText}>12:00 - 13:00</p>
 
