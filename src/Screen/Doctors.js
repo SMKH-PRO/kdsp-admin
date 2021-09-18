@@ -2,12 +2,12 @@ import React, { useState } from "react";
 
 import { Container, Typography } from "@mui/material";
 
-const Login = () => {
+const Doctor = () => {
   return (
-    <div>
-      <Typography>Login</Typography>
-    </div>
+    <Container>
+      <Typography>Doctor</Typography>
+    </Container>
   );
 };
 
-export default Login;
+export default Doctor;

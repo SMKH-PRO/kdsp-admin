@@ -1,0 +1,29 @@
+.sidebar-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sidebar-main {
+    background-color: bisque;
+    flex: 1
+}
+
+.sidebar-btn-container {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.sidebar-btn {
+    margin: 10px 0px;
+    text-align: center;
+    /* background-color: blanchedalmond; */
+
+}

@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware, combineReducers } from "redux";
+import { createStore, combineReducers } from "redux";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 
 import userReducer from "./Reducers/userReducer";
