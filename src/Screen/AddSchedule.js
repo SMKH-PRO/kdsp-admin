@@ -11,6 +11,7 @@ import { addSchedule } from "../Redux/Actions/schduleActions";
 import { v4 as uuidv4 } from 'uuid';
 import { fakeLoading } from "../Utils/helpers";
 import { useParams } from "react-router-dom";
+import { schedulesPath } from "../Navigation/routes";
 
 let therapyListArr = [
   OT,
@@ -24,7 +25,7 @@ const useStyles = makeStyles({
   },
 });
 
-const AddSchedule = () => {
+const AddSchedule = (props) => {
   const { id } = useParams();
 
   console.log("id=======>", id)
@@ -34,11 +35,6 @@ const AddSchedule = () => {
 
   const schedulesArr = useSelector((store) => store?.ScheduleReducer?.schedules);
   const dataSource = useSelector(state => (state?.waitListReducer?.waitList || []))
-
-  // let clientsArr = dataSource.map((d) => ({
-  //   label: d?.name,
-  //   id: d?.id
-  // }));
 
   const [doctor, setDoctor] = useState(null);
   const [timeAvailable, setTimeAvailable] = useState(null);
@@ -130,6 +126,8 @@ const AddSchedule = () => {
         console.log("new arra", newArr)
 
         dispatch(addSchedule(newArr))
+
+        props.history.push(schedulesPath)
 
         setLoading(false);
 
