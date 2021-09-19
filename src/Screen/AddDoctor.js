@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { useTheme } from '@mui/material/styles'
 import { Container, Typography, TextField, Button, InputLabel, Select, Box, Chip, MenuItem, OutlinedInput, FormControl } from '@mui/material'
+import { OT, PT, ST } from '../Utils/constants';
 
 const names = [
-  'Occupational Therapy',
-  'Physical Therapy',
-  'Speech Therapy'
+  OT,
+  PT,
+  ST
 ]
 
 const ITEM_HEIGHT = 48
