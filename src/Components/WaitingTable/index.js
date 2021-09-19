@@ -14,7 +14,7 @@ import { useDispatch } from 'react-redux';
 import AddWaitList from './Add';
 import FeedbackForm from './Feedback';
 import { Link } from 'react-router-dom';
-import { addSchedulesPath } from '../../Navigation/routes';
+import { addSchedulesPathWithId } from '../../Navigation/routes';
 
 const DragHandle = sortableHandle(() => <DragIndicator style={{ cursor: 'grab', color: '#999' }} />);
 
@@ -65,7 +65,9 @@ const SortableTable = () => {
                 </IconButton>
             </Popconfirm>
 
-            <Link to={`${addSchedulesPath}/${record?.id}`}>
+            {/* `${addSchedulesPath}/${record?.id}` */}
+
+            <Link to={addSchedulesPathWithId.replace(':id', record?.id)}>
                 <IconButton>
                     <Check className="increaseFontSizeOnHover" color="success" />
                 </IconButton>
@@ -149,7 +151,7 @@ const SortableTable = () => {
             useDragHandle
             disableAutoscroll
             helperClass="row-dragging"
-            onSortEnd={onSortEnd} 
+            onSortEnd={onSortEnd}
             {...props}
         />
     );
