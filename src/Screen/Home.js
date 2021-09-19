@@ -2,9 +2,9 @@ import React, { useState } from "react";
 
 import { Container, Typography, IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { Header } from "./../Components";
+import { Header, DashboardChart } from "./../Components";
 const Home = () => {
-    const [modal, setModal] = useState(false)
+  const [modal, setModal] = useState(false);
   return (
     <div>
       <Header
@@ -15,7 +15,8 @@ const Home = () => {
           </IconButton>
         }
       />
-      <Typography>Home</Typography>
+      {/* <Typography>Home</Typography> */}
+      <DashboardChart />
     </div>
   );
 };
