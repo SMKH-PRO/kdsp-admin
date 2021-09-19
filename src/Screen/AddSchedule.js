@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { Container, TextField, Paper, Grid, Button } from "@mui/material";
 import { Header } from "./../Components";
-import { createStyles, makeStyles } from "@mui/styles";
+import { createStyles, makeStyles } from "@mui/styles"
 import Autocomplete from "@mui/material/Autocomplete";
 
 const useStyles = makeStyles({
@@ -17,7 +17,7 @@ const AddSchedule = () => {
   const [scheduleType, setScheduleType] = useState(null);
   const [client, setClient] = useState(null);
   const [note, setNote] = useState("");
-
+  const [errors, setErrors] = useState({});
   const onSubmit = () => {
     let obj = {
       doctor,
@@ -31,16 +31,21 @@ const AddSchedule = () => {
     console.log(obj, "obj");
     try {
       if (!obj.doctor) {
-        errorObj = "doctor must be selected";
+        errorObj.doctor = "doctor must be selected";
       }
       if (!obj.timeAvailable) {
-        errorObj = "time available must be selected";
+        errorObj.timeAvailable = "time available must be selected";
       }
       if (!obj.scheduleType) {
-        errorObj = "schedule type must be selected";
+        errorObj.scheduleType = "schedule type must be selected";
       }
       if (!obj.client) {
-        errorObj = "client must be selected";
+        errorObj.client = "client must be selected";
+      }
+
+      if (Object.keys(errorObj).length) {
+        setErrors(errorObj);
+        return;
       }
     } catch (error) {
       console.log(error, "err");
@@ -58,7 +63,13 @@ const AddSchedule = () => {
                 id="combo-box-demo"
                 options={doctorsArr}
                 renderInput={(params) => (
-                  <TextField {...params} label="Doctor / Therapist" fullWidth />
+                  <TextField
+                    {...params}
+                    label="Doctor / Therapist"
+                    fullWidth
+                    error={Boolean(errors.doctor)}
+                    helperText={errors.doctor}
+                  />
                 )}
                 value={doctor}
                 onChange={(event, newValue) => {
@@ -73,7 +84,12 @@ const AddSchedule = () => {
                 id="combo-box-demo"
                 options={availabillityArr}
                 renderInput={(params) => (
-                  <TextField {...params} label="time available" />
+                  <TextField
+                    {...params}
+                    label="time available"
+                    error={Boolean(errors.timeAvailable)}
+                    helperText={errors.timeAvailable}
+                  />
                 )}
                 value={timeAvailable}
                 onChange={(event, newValue) => {
@@ -89,7 +105,12 @@ const AddSchedule = () => {
                 id="combo-box-demo"
                 options={scheduleTypeArr}
                 renderInput={(params) => (
-                  <TextField {...params} label="schedule as" />
+                  <TextField
+                    {...params}
+                    label="schedule as"
+                    error={Boolean(errors.scheduleType)}
+                    helperText={errors.scheduleType}
+                  />
                 )}
                 fullWidth={true}
                 value={scheduleType}
@@ -104,7 +125,12 @@ const AddSchedule = () => {
                 id="combo-box-demo"
                 options={clientsArr}
                 renderInput={(params) => (
-                  <TextField {...params} label="Client" />
+                  <TextField
+                    {...params}
+                    label="Client"
+                    error={Boolean(errors.client)}
+                    helperText={errors.client}
+                  />
                 )}
                 fullWidth={true}
                 value={client}

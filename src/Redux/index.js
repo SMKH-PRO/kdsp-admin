@@ -3,6 +3,7 @@ import storage from "redux-persist/lib/storage"; // defaults to localStorage for
 
 import userReducer from "./Reducers/userReducer";
 import waitListReducer from "./Reducers/waitListReducer";
+import doctorReducer from "./Reducers/doctorReducer";
 
 import { persistStore, persistReducer } from "redux-persist";
 
@@ -12,7 +13,8 @@ const persistConfig = {
 };
 let rootReducer = combineReducers({
   userReducer,
-  waitListReducer
+  waitListReducer,
+  doctorReducer
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = createStore(persistedReducer);
