@@ -11,49 +11,37 @@ import { useSelector } from 'react-redux';
 import { setWaitList } from '../../Redux/Actions/waitListActions';
 import { useDispatch } from 'react-redux';
 import AddMasterSheet from './AddMasterSheet'
+import { setMasterSheet } from '../../Redux/Actions/msheetAction';
 
 const actionButtons = () => (
     <div className="row">
-        <IconButton className="myTableActions" size="small">
-            <Edit className="increaseFontSizeOnHover" color="primary" size />
-        </IconButton>
+
 
         <IconButton>
             <Delete className="increaseFontSizeOnHover" color="warning" />
         </IconButton>
 
-        <IconButton>
-            <Check className="increaseFontSizeOnHover" color="success" />
-        </IconButton>
+
     </div>
 )
 
-const SortableItem = sortableElement(props => <tr {...props} />);
-const SortableContainer = sortableContainer(props => <tbody {...props} />);
+
 
 const MasterSheetTable = () => {
     const dispatch = useDispatch()
-    const dataSource = [
-        {
-            name: 'Ali',
-            age: 4,
-            schedule: '11/10/2021',
-            therapist: 'Dr Shehzad',
-            type: 'Occupational Therapy',
-            date: '11/10/2021'
-        }
-    ]
-    console.log("REDUX", useSelector(state => state?.waitListReducer?.waitList))
+
+
+
+    const dataSource = useSelector(state => state?.msheetReducer?.mastersheet)
 
     const [selectedRow, setSelectedRow] = useState({})
-    const [openFeedbackForm, setOpenFeedbackForm] = useState(false)
     const [openAddForm, setOpenAddForm] = useState(false)
 
-    const setDataSource = (d) => dispatch(setWaitList(d))
+    const setDataSource = (d) => dispatch(setMasterSheet(d))
 
     const addToWaitingList = (
         <div>
-            <Tooltip arrow title="Add More Patients To Waiting List.">
+            <Tooltip arrow title="Add Records">
                 <IconButton
                     className="NoMargin NoPadding"
                     onClick={() => setOpenAddForm(true)}>
@@ -63,6 +51,20 @@ const MasterSheetTable = () => {
         </div>
     )
 
+    /**
+     *  {
+        "id": "338186de-7335-41b8-81ab-37d1c9c8807f",
+        "key": "338186de-7335-41b8-81ab-37d1c9c8807f",
+
+        "index": 0,
+        "name": "Kamran",
+        "schedule": { startTime: new Date().getTime(), endTime: new Date().getTime() },
+        "phone": "336423234",
+        "payment": "500",
+        "type": "Occupational Therapy",
+        "date": 1632044250440
+    },
+     */
     const columns = [
         {
             title: addToWaitingList,
@@ -76,26 +78,31 @@ const MasterSheetTable = () => {
             dataIndex: 'name',
             className: 'drag-visible',
         },
-        {
-            title: 'Age',
-            dataIndex: 'age',
-        },
+
         {
             title: 'Schedule',
             dataIndex: 'schedule',
-            render: (text) => <a>{text}</a>,
+            render: (text, record) => (
+                <div className="row">
+                    <Tooltip arrow title={`${longTimeFormat(record?.schedule?.startTime)}`} ><span >{new Date(record?.schedule?.startTime).toLocaleDateString()}</span></Tooltip>
+                    &nbsp;- &nbsp;
+                    <Tooltip arrow title={`${longTimeFormat(record?.schedule?.endTime)}`} ><span >{new Date(record?.schedule?.endTime).toLocaleDateString()}</span></Tooltip>
+                </div>
+            )
         },
         {
             title: 'Therapist',
             dataIndex: 'therapist'
         },
         {
-            title: 'Therapy Status',
+            title: 'Therapy Type',
             dataIndex: 'type',
         },
         {
             title: 'Payment',
-            dataIndex: 'type',
+            dataIndex: 'payment',
+            render: (text) => <a>Rs. {text}</a>,
+
         },
         {
             title: 'Date Updated',
@@ -104,29 +111,7 @@ const MasterSheetTable = () => {
         }
     ];
 
-    const onSortEnd = ({ oldIndex, newIndex }) => {
-        if (oldIndex !== newIndex) {
-            const newData = arrayMove([].concat(dataSource), oldIndex, newIndex)?.filter(el => !!el);
-            console.log('Sorted items: ', newData);
-            setDataSource(newData);
-        }
-    };
 
-    const DraggableContainer = props => (
-        <SortableContainer
-            useDragHandle
-            disableAutoscroll
-            helperClass="row-dragging"
-            onSortEnd={onSortEnd}
-            {...props}
-        />
-    );
-
-    const DraggableBodyRow = ({ className, style, ...restProps }) => {
-        // function findIndex base on Table rowKey props and should always be a right array index
-        const index = dataSource?.findIndex?.(x => x.index === restProps['data-row-key']);
-        return <SortableItem index={index} {...restProps} />;
-    };
 
     return (
         <>
@@ -134,13 +119,8 @@ const MasterSheetTable = () => {
                 pagination={{ hideOnSinglePage: true, pageSize: 10 }}
                 dataSource={Array.isArray(dataSource) ? dataSource : []}
                 columns={columns}
-                rowKey="index"
-                components={{
-                    body: {
-                        wrapper: DraggableContainer,
-                        row: DraggableBodyRow,
-                    },
-                }}
+                rowKey="id"
+
             />
             {openAddForm && <AddMasterSheet onClose={setOpenAddForm} dataSource={dataSource} selectedRow={selectedRow} />}
         </>
