@@ -19,11 +19,14 @@ import { message, } from 'antd';
 
 import { useDispatch, useSelector } from "react-redux";
 import { ADD_DOCTOR } from "../Redux/Types";
+import { OT, PT, ST } from '../Utils/constants';
 const useStyles = makeStyles({
   paper: {
     padding: 20,
   },
 });
+
+
 const names = [
   OT,
   PT,
