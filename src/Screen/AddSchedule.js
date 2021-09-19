@@ -1,23 +1,26 @@
 import React, { useEffect, useState } from "react";
 
-import { Container, TextField, Paper, Grid, Button, CircularProgress } from "@mui/material";
+import {
+  Container,
+  TextField,
+  Paper,
+  Grid,
+  Button,
+  CircularProgress,
+} from "@mui/material";
 import { Header } from "./../Components";
-import { createStyles, makeStyles } from "@mui/styles"
+import { createStyles, makeStyles } from "@mui/styles";
 import Autocomplete from "@mui/material/Autocomplete";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import { ADD_SCHEDULE } from "../Redux/Types";
-import { OT, PT, ST } from '../Utils/constants';
+import { OT, PT, ST } from "../Utils/constants";
 import { addSchedule } from "../Redux/Actions/schduleActions";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import { fakeLoading } from "../Utils/helpers";
 import { useParams } from "react-router-dom";
 import { schedulesPath } from "../Navigation/routes";
-
-let therapyListArr = [
-  OT,
-  PT,
-  ST
-];
+import moment from "moment";
+let therapyListArr = [OT, PT, ST];
 
 const useStyles = makeStyles({
   paper: {
@@ -28,13 +31,22 @@ const useStyles = makeStyles({
 const AddSchedule = (props) => {
   const { id } = useParams();
 
-  console.log("id=======>", id)
+  console.log("id=======>", id);
 
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const schedulesArr = useSelector((store) => store?.ScheduleReducer?.schedules);
-  const dataSource = useSelector(state => (state?.waitListReducer?.waitList || []))
+  const schedulesArr = useSelector(
+    (store) => store?.ScheduleReducer?.schedules
+  );
+  const clients = useSelector((store) => store?.clientReducer?.clients);
+  const doctors = useSelector((store) => store?.doctorReducer?.doctors);
+  const doctorAvailibility = useSelector(
+    (store) => store?.doctorReducer?.doctorAvailibility
+  );
+  const dataSource = useSelector(
+    (state) => state?.waitListReducer?.waitList || []
+  );
 
   const [doctor, setDoctor] = useState(null);
   const [timeAvailable, setTimeAvailable] = useState(null);
@@ -43,33 +55,31 @@ const AddSchedule = (props) => {
   const [note, setNote] = useState("");
   const [therapyType, setTherapyType] = useState("");
   const [loading, setLoading] = useState(false);
-  const [onlyClient, setonlyClient] = useState('');
+  const [onlyClient, setonlyClient] = useState("");
   const [clientsArr, setclientsArr] = useState([]);
 
   const [errors, setErrors] = useState({});
 
-
   useEffect(() => {
     if (id) {
-
       let clientObj = dataSource.find((d) => d?.id == id);
 
       let newObj = {
         label: clientObj?.name,
-        id: clientObj?.id
-      }
+        id: clientObj?.id,
+      };
 
-      setonlyClient(newObj)
+      setonlyClient(newObj);
     } else {
-      setonlyClient('')
+      setonlyClient("");
       let clientsArrrr = dataSource.map((d) => ({
         label: d?.name,
-        id: d?.id
+        id: d?.id,
       }));
-      console.log("clientsArrrr-->", clientsArrrr)
-      setclientsArr([...clientsArrrr])
+      console.log("clientsArrrr-->", clientsArrrr);
+      setclientsArr([...clientsArrrr]);
     }
-  }, [])
+  }, []);
 
   const onSubmit = async () => {
     let obj = {
@@ -100,12 +110,9 @@ const AddSchedule = (props) => {
         setErrors(errorObj);
         return;
       } else {
+        setLoading(true);
 
-
-
-        setLoading(true)
-
-        await fakeLoading()
+        await fakeLoading();
 
         let scheduleObj = {
           doctorName: doctor,
@@ -115,30 +122,32 @@ const AddSchedule = (props) => {
           startTime: "8945982",
           endTime: "jndjfnj",
           sessionType: therapyType,
-          id: uuidv4()
-        }
+          id: uuidv4(),
+        };
 
-
-        console.log("schedulesArr===>", schedulesArr)
+        console.log("schedulesArr===>", schedulesArr);
 
         let newArr = [...schedulesArr, scheduleObj];
 
-        console.log("new arra", newArr)
+        console.log("new arra", newArr);
 
-        dispatch(addSchedule(newArr))
+        dispatch(addSchedule(newArr));
 
-        props.history.push(schedulesPath)
+        props.history.push(schedulesPath);
 
         setLoading(false);
-
       }
-
     } catch (error) {
       console.log(error, "err");
     }
   };
 
-  const loadingComp = loading && <span style={{ marginRight: 15 }}> <CircularProgress size={16} /></span>
+  const loadingComp = loading && (
+    <span style={{ marginRight: 15 }}>
+      {" "}
+      <CircularProgress size={16} />
+    </span>
+  );
 
   return (
     <div>
@@ -150,7 +159,12 @@ const AddSchedule = (props) => {
               <Autocomplete
                 disablePortal
                 id="combo-box-demo"
-                options={doctorsArr}
+                options={doctors.map((v) => {
+                  return {
+                    label: v.name,
+                    ...v,
+                  };
+                })}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -171,7 +185,14 @@ const AddSchedule = (props) => {
               <Autocomplete
                 disablePortal
                 id="combo-box-demo"
-                options={availabillityArr}
+                options={doctorAvailibility
+                  .filter((v) => v.doctorId === doctor?.id)
+                  .map((v) => {
+                    return {
+                      label:`on ${v.day} at ${ moment(v.startDate).format("hh:mm a")} from ${moment(v.endDate).format("hh:mm a")}`,
+                      ...v,
+                    };
+                  })}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -213,7 +234,15 @@ const AddSchedule = (props) => {
                 disablePortal
                 id="combo-box-demo"
                 disabled={onlyClient ? true : false}
-                options={onlyClient || clientsArr}
+                options={
+                  onlyClient ||
+                  clients.map((v) => {
+                    return {
+                      label: v.name,
+                      ...v,
+                    };
+                  })
+                }
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -251,9 +280,6 @@ const AddSchedule = (props) => {
               />
             </Grid>
 
-
-
-
             <Grid item xs={12}>
               <TextField
                 label="Note"
@@ -275,8 +301,8 @@ const AddSchedule = (props) => {
                 size="large"
                 onClick={onSubmit}
               >
-                {loadingComp}{loading ? "Adding..." : "Add Schedule"}
-
+                {loadingComp}
+                {loading ? "Adding..." : "Add Schedule"}
               </Button>
             </Grid>
           </Grid>
