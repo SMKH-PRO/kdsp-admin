@@ -34,7 +34,16 @@ const SortableContainer = sortableContainer(props => <tbody {...props} />);
 
 const MasterSheetTable = () => {
     const dispatch = useDispatch()
-    const dataSource = useSelector(state => (state?.waitListReducer?.waitList || []))
+    const dataSource = [
+        {
+            name: 'Ali',
+            age: 4,
+            schedule: '11/10/2021',
+            therapist: 'Dr Shehzad',
+            type: 'Occupational Therapy',
+            date: '11/10/2021'
+        }
+    ]
     console.log("REDUX", dataSource)
 
     const [selectedRow, setSelectedRow] = useState({})
@@ -57,16 +66,7 @@ const MasterSheetTable = () => {
 
     const columns = [
         {
-            title: addToWaitingList,
-            dataIndex: 'sort',
-            width: 30,
-            className: 'drag-visible',
-            render: () => <DragHandle />,
-
-        },
-
-        {
-            title: 'Patient Name',
+            title: 'Client Name',
             dataIndex: 'name',
             className: 'drag-visible',
         },
@@ -75,45 +75,27 @@ const MasterSheetTable = () => {
             dataIndex: 'age',
         },
         {
-            title: 'Phone',
-            dataIndex: 'phone',
-            render: (text) => <a href={`tel:${text}`}>{text}</a>,
-
+            title: 'Schedule',
+            dataIndex: 'schedule',
+            render: (text) => <a>{text}</a>,
         },
         {
-            title: 'Therapy Type',
+            title: 'Therapist',
+            dataIndex: 'therapist'
+        },
+        {
+            title: 'Therapy Status',
             dataIndex: 'type',
         },
         {
-            title: 'Patient Feedback',
-            dataIndex: 'feedback',
-            render: (text, record) => {
-                let click = () => { setSelectedRow(record); setOpenFeedbackForm(true) }
-
-                if (!isNull(text)) {
-                    let isLargeText = Boolean(text?.length > 30)
-                    return (
-                        <ConditionalTooltip show={isLargeText} title={text}>
-                            <span style={{ cursor: "pointer" }} onClick={click} >{isLargeText ? text?.substr(0, 30) + "..." : text}</span>
-                        </ConditionalTooltip>
-                    )
-                }
-
-                return <Button onClick={click} color="primary">Add Feedback  </Button>
-            }
+            title: 'Payment',
+            dataIndex: 'type',
         },
         {
             title: 'Date Updated',
             dataIndex: 'date',
             render: (text) => (<Tooltip arrow title={`${longTimeFormat(text)}`} ><span >{new Date(text).toLocaleDateString()}</span></Tooltip>)
-        },
-        {
-            title: "Actions",
-            dataIndex: 'actions',
-            width: 30,
-            className: 'drag-visible',
-            render: actionButtons,
-        },
+        }
     ];
 
     const onSortEnd = ({ oldIndex, newIndex }) => {
