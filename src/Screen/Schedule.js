@@ -38,12 +38,12 @@ const Schedule = (props) => {
 
                 <Grid container spacing={6}>
 
-                    {schedules.map((d, i) => {
+                    {Array.isArray(schedules) && schedules.legnth ? schedules.map((d, i) => {
                         return <Grid item xs={12} sm={12} md={6} lg={4} xl={4} >
                             <ScheduleCard cardData={d} />
                         </Grid>
 
-                    })}
+                    }) : <p style={{ margin: "60px" }}>No schedules for today</p>}
                 </Grid>
 
 
