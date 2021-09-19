@@ -26,7 +26,7 @@ export const doctorsPath = "/doctors";
 export const adddoctorsPath = "/add-doctors";
 export const schedulesPath = "/schedules";
 export const addSchedulesPath = "/add-schedule";
-export const doctorDetailsPath = "/doctor-details";
+export const doctorDetailsPath = "/doctor-details/:id";
 export const masterSheetPath = "/master-sheet";
 
 const ROUTES = [

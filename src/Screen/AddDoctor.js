@@ -212,6 +212,7 @@ const AddDoctor = () => {
             // className="submit-button"
             onClick={onSubmit}
             size="large"
+            style={{marginTop: 7}}
           >
             Submit
           </Button>
