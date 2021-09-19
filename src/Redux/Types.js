@@ -4,3 +4,7 @@ export const ADD_CLIENTS = 'ADD_CLIENTS'
 
 
 export const SET_WAIT_LIST = "SET_WAIT_LIST"
+
+// SCHEDULES
+
+export const ADD_SCHEDULE = "ADD_SCHEDULE";

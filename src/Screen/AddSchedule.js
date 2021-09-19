@@ -4,6 +4,8 @@ import { Container, TextField, Paper, Grid, Button } from "@mui/material";
 import { Header } from "./../Components";
 import { createStyles, makeStyles } from "@mui/styles"
 import Autocomplete from "@mui/material/Autocomplete";
+import { useDispatch } from 'react-redux';
+import { ADD_SCHEDULE } from "../Redux/Types";
 
 const useStyles = makeStyles({
   paper: {
@@ -12,6 +14,9 @@ const useStyles = makeStyles({
 });
 const AddSchedule = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+
   const [doctor, setDoctor] = useState(null);
   const [timeAvailable, setTimeAvailable] = useState(null);
   const [scheduleType, setScheduleType] = useState(null);
@@ -46,7 +51,18 @@ const AddSchedule = () => {
       if (Object.keys(errorObj).length) {
         setErrors(errorObj);
         return;
+      } else {
+
+        let scheduleObj = {
+          doctorName: doctor,
+          clientName: client,
+          status: "Scheduled"
+        }
+
+        dispatch({ type: ADD_SCHEDULE, payload: scheduleObj })
+
       }
+
     } catch (error) {
       console.log(error, "err");
     }
