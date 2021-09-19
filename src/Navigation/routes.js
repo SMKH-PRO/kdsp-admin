@@ -16,6 +16,7 @@ import DateRangeIcon from "@mui/icons-material/DateRange";
 import MasterSchedule from "@mui/icons-material/Schedule"
 import Awaiting from '../Screen/Awaiting';
 import { AccessTime } from "@mui/icons-material";
+import ArticleIcon from '@mui/icons-material/Article';
 
 export const homePath = "/";
 
@@ -116,7 +117,7 @@ const ROUTES = [
     component: (props) => <MasterSheet {...props} />,
     visibleInSidebar: true,
     authRequired: false,
-    icon: MasterSchedule,
+    icon: ArticleIcon,
     exact: true,
   },
 ];
