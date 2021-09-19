@@ -77,9 +77,7 @@ const SortableTable = () => {
             width: 30,
             className: 'drag-visible',
             render: () => <DragHandle />,
-
         },
-
         {
             title: 'Patient Name',
             dataIndex: 'name',
