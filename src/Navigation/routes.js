@@ -6,12 +6,14 @@ import {
   Schedule,
   AddSchedule,
   AddDoctor,
-  DoctorDetails
+  DoctorDetails,
+  MasterSheet
 } from "./../Screen";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import DateRangeIcon from "@mui/icons-material/DateRange";
+import MasterSchedule from "@mui/icons-material/Schedule"
 import Awaiting from '../Screen/Awaiting';
 import { AccessTime } from "@mui/icons-material";
 
@@ -25,6 +27,7 @@ export const adddoctorsPath = "/add-doctors";
 export const schedulesPath = "/schedules";
 export const addSchedulesPath = "/add-schedule";
 export const doctorDetailsPath = "/doctor-details";
+export const masterSheetPath = "/master-sheet";
 
 const ROUTES = [
   {
@@ -105,6 +108,15 @@ const ROUTES = [
     visibleInSidebar: false,
     authRequired: true,
     icon: DateRangeIcon,
+    exact: true,
+  },
+  {
+    title: "Master Sheet",
+    path: masterSheetPath,
+    component: (props) => <MasterSheet {...props} />,
+    visibleInSidebar: true,
+    authRequired: false,
+    icon: MasterSchedule,
     exact: true,
   },
 ];

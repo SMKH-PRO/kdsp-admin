@@ -4,9 +4,6 @@ import SortableTable from '../Components/WaitingTable/index';
 import Header from '../Components/Header/index';
 import Container from '@mui/material/Container';
 
-
-
-
 const useStyles = makeStyles({
     root: {
         backgroundColor: 'red',
