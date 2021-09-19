@@ -5,7 +5,8 @@ import { adddoctorsPath } from "../Navigation/routes";
 import { Header } from "./../Components";
 import AddIcon from "@mui/icons-material/Add";
 import { useSelector } from "react-redux";
-// import {}
+import { useHistory } from "react-router";  
+import { doctorDetailsPath } from "../Navigation/routes";
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
@@ -17,6 +18,7 @@ const useStyles = makeStyles((theme) =>
 const Doctor = (props) => {
   console.log("props", props);
   const classes = useStyles(props);
+  const history = useHistory()
   const doctors = useSelector((state) => state.doctorReducer.doctors);
   return (
     <div>
@@ -36,7 +38,7 @@ const Doctor = (props) => {
           {doctors.map((doctor) => {
             return (
               <Grid item xs={4}>
-                <Paper style={{ padding: 10 }} onClick={() => {}}>
+                <Paper style={{ padding: 10 }} onClick={() => history.push(doctorDetailsPath)}>
                   <Grid container spacing={2}>
                     <Grid item xs={4}>
                       <Avatar
