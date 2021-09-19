@@ -8,6 +8,7 @@ import ScheduleReducer from "./Reducers/ScheduleReducer";
 import clientReducer from "./Reducers/clientReducer";
 
 import { persistStore, persistReducer } from "redux-persist";
+import msheetReducer from "./Reducers/msheetReducer";
 
 const persistConfig = {
   key: "root",
@@ -18,6 +19,7 @@ let rootReducer = combineReducers({
   waitListReducer,
   doctorReducer,
   ScheduleReducer,
+  msheetReducer,
   clientReducer
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);

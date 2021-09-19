@@ -5,8 +5,8 @@ import Header from '../Components/Header/index';
 const MasterSheet = () => {
     return (
         <div className="content-container">
-            <Header />
-            <h1>Master Sheet</h1>
+            <Header title="Master Sheet" />
+
             <MasterSheetTable />
         </div>
     )
