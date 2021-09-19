@@ -6,25 +6,15 @@ import "./index.css"
 import "antd/dist/antd.css";
 import { AddCircle, Delete, DragIndicator, Edit, Check } from '@mui/icons-material';
 import { IconButton, Tooltip } from '@mui/material';
-import { isNull, longTimeFormat } from '../../Utils/helpers';
+import { ConditionalTooltip, fakeLoading, isNull, longTimeFormat } from '../../Utils/helpers';
 import { Button } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { setWaitList } from '../../Redux/Actions/waitListActions';
 import { useDispatch } from 'react-redux';
-
+import AddWaitList from './Add';
+import FeedbackForm from './Feedback';
 
 const DragHandle = sortableHandle(() => <DragIndicator style={{ cursor: 'grab', color: '#999' }} />);
-const addToWaitingList = (
-    <div>
-        <Tooltip arrow title="Add More Patients To Waiting List.">
-            <IconButton
-                className="NoMargin NoPadding"
-                onClick={() => alert("Coming Soon!")}>
-                <AddCircle />
-            </IconButton>
-        </Tooltip>
-    </div>
-)
 
 const actionButtons = () => (
     <div className="row">
@@ -53,10 +43,25 @@ const SortableTable = () => {
     const dataSource = useSelector(state => (state?.waitListReducer?.waitList || []))
     console.log("REDUX", dataSource)
 
-
+    const [selectedRow, setSelectedRow] = useState({})
+    const [openFeedbackForm, setOpenFeedbackForm] = useState(false)
+    const [openAddForm, setOpenAddForm] = useState(false)
 
     const setDataSource = (d) => dispatch(setWaitList(d))
-    
+
+    const addToWaitingList = (
+        <div>
+            <Tooltip arrow title="Add More Patients To Waiting List.">
+                <IconButton
+
+                    className="NoMargin NoPadding"
+                    onClick={() => setOpenAddForm(true)}>
+                    <AddCircle />
+                </IconButton>
+            </Tooltip>
+        </div>
+    )
+
     const columns = [
         {
             title: addToWaitingList,
@@ -89,18 +94,25 @@ const SortableTable = () => {
         {
             title: 'Patient Feedback',
             dataIndex: 'feedback',
-            render: (text, record) => (
+            render: (text, record) => {
+                let click = () => { setSelectedRow(record); setOpenFeedbackForm(true) }
 
-                !isNull(text) ?
-                    (<span >{text}</span>)
-                    :
-                    (<Button color="primary">Add Feedback  </Button>)
-            )
+                if (!isNull(text)) {
+                    let isLargeText = Boolean(text?.length > 30)
+                    return (
+                        <ConditionalTooltip show={isLargeText} title={text}>
+                            <span style={{ cursor: "pointer" }} onClick={click} >{isLargeText ? text?.substr(0, 30) + "..." : text}</span>
+                        </ConditionalTooltip>
+                    )
+                }
+
+                return <Button onClick={click} color="primary">Add Feedback  </Button>
+            }
         },
         {
             title: 'Date Updated',
             dataIndex: 'date',
-            render: (text) => (<Tooltip arrow title={`${longTimeFormat(new Date().getTime())}`} ><span >{text}</span></Tooltip>)
+            render: (text) => (<Tooltip arrow title={`${longTimeFormat(text)}`} ><span >{new Date(text).toLocaleDateString()}</span></Tooltip>)
         },
         {
             title: "Actions",
@@ -131,24 +143,30 @@ const SortableTable = () => {
 
     const DraggableBodyRow = ({ className, style, ...restProps }) => {
         // function findIndex base on Table rowKey props and should always be a right array index
-        const index = dataSource.findIndex(x => x.index === restProps['data-row-key']);
+        const index = dataSource?.findIndex?.(x => x.index === restProps['data-row-key']);
         return <SortableItem index={index} {...restProps} />;
     };
 
 
     return (
-        <Table
-            pagination={{ hideOnSinglePage: true, pageSize: 10 }}
-            dataSource={dataSource}
-            columns={columns}
-            rowKey="index"
-            components={{
-                body: {
-                    wrapper: DraggableContainer,
-                    row: DraggableBodyRow,
-                },
-            }}
-        />
+
+        <>
+            <Table
+                pagination={{ hideOnSinglePage: true, pageSize: 10 }}
+                dataSource={Array.isArray(dataSource) ? dataSource : []}
+                columns={columns}
+                rowKey="index"
+                components={{
+                    body: {
+                        wrapper: DraggableContainer,
+                        row: DraggableBodyRow,
+                    },
+                }}
+            />
+            {openAddForm && <AddWaitList onClose={setOpenAddForm} />}
+            {openFeedbackForm && <FeedbackForm dataSource={dataSource} selectedRow={selectedRow} onClose={setOpenFeedbackForm} />}
+
+        </>
     );
 
 }
