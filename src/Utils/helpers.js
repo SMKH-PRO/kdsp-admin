@@ -1,10 +1,11 @@
+import { Tooltip } from "@mui/material"
 import moment from "moment"
 
 
 
 export const longTimeFormat = (time) => moment(time).format(`DD MMMM YYYY, h:mm A`)
 
-
+export const fakeLoading = (ms = 1000) => new Promise((resolve, reject) => setTimeout(resolve, ms || 1000))
 export const isNull = (value) => { //work for strings/numbers/arrays/objects/boolean
     // console.log(value)
     if (typeof value == "number" || typeof value == "boolean") { //if any number let it be 0 or any boolean, it will return false
@@ -20,3 +21,16 @@ export const isNull = (value) => { //work for strings/numbers/arrays/objects/boo
     }
 }
 
+
+
+
+export const ConditionalTooltip = ({ show, children, ...props }) => {
+    if (show) {
+        return <Tooltip arrow {...props} >
+            {children}
+        </Tooltip>
+    } else {
+        return children
+    }
+
+}

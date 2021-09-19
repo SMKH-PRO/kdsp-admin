@@ -1,4 +1,4 @@
-import { ADD_TO_WAIT_LIST, DELET_FROM_WAIT_LIST, SET_WAIT_LIST } from "../Types";
+import { ADD_TO_WAIT_LIST, DELET_FROM_WAIT_LIST, SET_WAIT_LIST, UPDATE_WAIT_LIST } from "../Types";
 
 
 export const addToWaitList = (obj) => (
@@ -21,3 +21,15 @@ export const setWaitList = (waitListArray) => (
         waitList: waitListArray
     }
 )
+
+
+export const updateWaitListObj = (newWaitListObj, waitListState) => {
+    const waitListId = newWaitListObj?.id
+
+    const prevWaitListObj = waitListState?.find(d => d?.id == waitListId)
+    const updatedWaitListObj = Object.assign(prevWaitListObj, newWaitListObj)
+    const allExceptThis = waitListState.filter(d => d?.id !== waitListId)
+    const newWaitList = [...allExceptThis, updatedWaitListObj]
+    console.log("newWaitList", newWaitList)
+    return setWaitList(newWaitList)
+}
