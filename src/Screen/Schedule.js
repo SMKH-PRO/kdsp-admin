@@ -1,25 +1,31 @@
 import React, { useState } from "react";
 
-import { Container, Typography, IconButton, Grid } from "@mui/material";
+import { Container, Typography, IconButton, Grid, Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { Header, ScheduleCard } from "./../Components";
 import { doctorSchedules } from "../data";
+import AddIcon from "@mui/icons-material/Add";
+import { addSchedulesPath } from "../Navigation/routes";
 
-
-
-const Schedule = () => {
+const Schedule = (props) => {
     return (
         <div>
             <Header
                 title="Schedules"
                 rightComponent={
-                    <IconButton>
-                        <SearchIcon />
-                    </IconButton>
+                    <div>
+                        <Button
+                            startIcon={<AddIcon />}
+                            onClick={() => props?.history?.push(addSchedulesPath)}
+                        >
+                            Add Schedule
+                        </Button>
+                        <IconButton>
+                            <SearchIcon />
+                        </IconButton>
+                    </div>
                 }
             />
-
-
 
             <div className="content-container">
 
@@ -28,7 +34,7 @@ const Schedule = () => {
                 <Grid container spacing={6}>
 
                     {doctorSchedules.map((d, i) => {
-                        return <Grid item xs={4}>
+                        return <Grid item xs={12} sm={12} md={6} lg={4} xl={4} >
                             <ScheduleCard cardData={d} />
                         </Grid>
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Container, TextField, Paper, Grid, Button } from "@mui/material";
+import { Container, TextField, Paper, Grid, Button, CircularProgress } from "@mui/material";
 import { Header } from "./../Components";
 import { createStyles, makeStyles } from "@mui/styles"
 import Autocomplete from "@mui/material/Autocomplete";
@@ -9,6 +9,7 @@ import { ADD_SCHEDULE } from "../Redux/Types";
 import { OT, PT, ST } from '../Utils/constants';
 import { addSchedule } from "../Redux/Actions/schduleActions";
 import { v4 as uuidv4 } from 'uuid';
+import { fakeLoading } from "../Utils/helpers";
 
 let therapyListArr = [
   OT,
@@ -34,9 +35,11 @@ const AddSchedule = () => {
   const [client, setClient] = useState(null);
   const [note, setNote] = useState("");
   const [therapyType, setTherapyType] = useState("");
+  const [loading, setLoading] = useState(false);
+
 
   const [errors, setErrors] = useState({});
-  const onSubmit = () => {
+  const onSubmit = async () => {
     let obj = {
       doctor,
       timeAvailable,
@@ -66,6 +69,10 @@ const AddSchedule = () => {
         return;
       } else {
 
+        setLoading(true)
+
+        await fakeLoading()
+
         let scheduleObj = {
           doctorName: doctor,
           clientName: client,
@@ -78,6 +85,8 @@ const AddSchedule = () => {
 
         dispatch(addSchedule(scheduleObj))
 
+        setLoading(false)
+
         console.log("state=====>", state)
 
       }
@@ -86,6 +95,9 @@ const AddSchedule = () => {
       console.log(error, "err");
     }
   };
+
+  const loadingComp = loading && <span style={{ marginRight: 15 }}> <CircularProgress size={16} /></span>
+
   return (
     <div>
       <Header title="Add New Schedule" />
@@ -220,7 +232,8 @@ const AddSchedule = () => {
                 size="large"
                 onClick={onSubmit}
               >
-                Add Schedule
+                {loadingComp}{loading ? "Adding..." : "Add Schedule"}
+
               </Button>
             </Grid>
           </Grid>
