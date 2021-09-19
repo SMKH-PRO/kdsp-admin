@@ -4,8 +4,17 @@ import { Container, TextField, Paper, Grid, Button } from "@mui/material";
 import { Header } from "./../Components";
 import { createStyles, makeStyles } from "@mui/styles"
 import Autocomplete from "@mui/material/Autocomplete";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ADD_SCHEDULE } from "../Redux/Types";
+import { OT, PT, ST } from '../Utils/constants';
+import { addSchedule } from "../Redux/Actions/schduleActions";
+import { v4 as uuidv4 } from 'uuid';
+
+let therapyListArr = [
+  OT,
+  PT,
+  ST
+];
 
 const useStyles = makeStyles({
   paper: {
@@ -16,12 +25,16 @@ const AddSchedule = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  const state = useSelector((store) => store?.ScheduleReducer)
+
 
   const [doctor, setDoctor] = useState(null);
   const [timeAvailable, setTimeAvailable] = useState(null);
   const [scheduleType, setScheduleType] = useState(null);
   const [client, setClient] = useState(null);
   const [note, setNote] = useState("");
+  const [therapyType, setTherapyType] = useState("");
+
   const [errors, setErrors] = useState({});
   const onSubmit = () => {
     let obj = {
@@ -56,10 +69,16 @@ const AddSchedule = () => {
         let scheduleObj = {
           doctorName: doctor,
           clientName: client,
-          status: "Scheduled"
+          status: "Scheduled",
+          startTime: "8945982",
+          endTime: "jndjfnj",
+          sessionType: therapyType,
+          id: uuidv4()
         }
 
-        dispatch({ type: ADD_SCHEDULE, payload: scheduleObj })
+        dispatch(addSchedule(scheduleObj))
+
+        console.log("state=====>", state)
 
       }
 
@@ -102,7 +121,7 @@ const AddSchedule = () => {
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    label="time available"
+                    label="Time available"
                     error={Boolean(errors.timeAvailable)}
                     helperText={errors.timeAvailable}
                   />
@@ -123,7 +142,7 @@ const AddSchedule = () => {
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    label="schedule as"
+                    label="Schedule as"
                     error={Boolean(errors.scheduleType)}
                     helperText={errors.scheduleType}
                   />
@@ -155,6 +174,31 @@ const AddSchedule = () => {
                 }}
               />
             </Grid>
+
+            <Grid item xs={12}>
+              <Autocomplete
+                disablePortal
+                id="combo-box-demo"
+                options={therapyListArr}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Therapy Type"
+                    error={Boolean(errors.therapyType)}
+                    helperText={errors.therapyType}
+                  />
+                )}
+                fullWidth={true}
+                value={therapyType}
+                onChange={(event, newValue) => {
+                  setTherapyType(newValue);
+                }}
+              />
+            </Grid>
+
+
+
+
             <Grid item xs={12}>
               <TextField
                 label="Note"
@@ -167,6 +211,7 @@ const AddSchedule = () => {
                 placeholder="Optional..."
               />
             </Grid>
+
             <Grid item xs={12}>
               <Button
                 fullWidth
