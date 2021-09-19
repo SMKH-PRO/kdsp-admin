@@ -24,8 +24,11 @@ const useStyles = makeStyles({
     padding: 20,
   },
 });
-const names = ["Occupational Therapy", "Physical Therapy", "Speech Therapy"];
-
+const names = [
+  OT,
+  PT,
+  ST
+]
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
