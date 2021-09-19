@@ -20,6 +20,7 @@ const AddWaitList = ({ onClose, selectedRow }) => {
 
         <Dialog open={true} onClose={handleClose}>
             <DialogTitle>Add Patients</DialogTitle>
+            <DialogContent>
                 <DialogContentText>
                     Add patients to wait list.
                 </DialogContentText>
