@@ -26,7 +26,18 @@ const AddSchedule = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const state = useSelector((store) => store?.ScheduleReducer)
+  const schedulesArr = useSelector((store) => store?.ScheduleReducer?.schedules);
+  const dataSource = useSelector(state => (state?.waitListReducer?.waitList || []))
+
+  console.log("dataSource==>", dataSource);
+
+  let clientsArr = dataSource.map((d) => ({
+    label: d?.name,
+    id: d?.id
+  }));
+
+  console.log("clientsArr==>", clientsArr);
+
 
 
   const [doctor, setDoctor] = useState(null);
@@ -75,7 +86,8 @@ const AddSchedule = () => {
 
         let scheduleObj = {
           doctorName: doctor,
-          clientName: client,
+          clientName: client?.label,
+          clientId: client?.id,
           status: "Scheduled",
           startTime: "8945982",
           endTime: "jndjfnj",
@@ -83,11 +95,16 @@ const AddSchedule = () => {
           id: uuidv4()
         }
 
-        dispatch(addSchedule(scheduleObj))
+
+        console.log("schedulesArr===>", schedulesArr)
+
+        let newArr = [...schedulesArr, scheduleObj];
+
+        dispatch(addSchedule(newArr))
 
         setLoading(false)
 
-        console.log("state=====>", state)
+        // console.log("schedulesArr=====>", schedulesArr)
 
       }
 
@@ -255,16 +272,16 @@ const doctorsArr = [
   { label: "Doctor H", year: 1994 },
 ];
 
-const clientsArr = [
-  { label: "Client A", year: 1994 },
-  { label: "Client B", year: 1994 },
-  { label: "Client C", year: 1994 },
-  { label: "Client D", year: 1994 },
-  { label: "Client E", year: 1994 },
-  { label: "Client F", year: 1994 },
-  { label: "Client G", year: 1994 },
-  { label: "Client H", year: 1994 },
-];
+// const clientsArr = [
+//   { label: "Client A", year: 1994 },
+//   { label: "Client B", year: 1994 },
+//   { label: "Client C", year: 1994 },
+//   { label: "Client D", year: 1994 },
+//   { label: "Client E", year: 1994 },
+//   { label: "Client F", year: 1994 },
+//   { label: "Client G", year: 1994 },
+//   { label: "Client H", year: 1994 },
+// ];
 
 const availabillityArr = [
   { label: "on monday 12:00 am to 13:00 pm", year: 1994 },
