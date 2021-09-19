@@ -37,7 +37,7 @@ function DashboardChart() {
       schedule: [
         {
           client: {
-            name: "Zaalim",
+            name: "imad chugtai",
             reason: "death",
             sessionType: "3",
           },
@@ -46,7 +46,7 @@ function DashboardChart() {
         },
         {
           client: {
-            name: "Zaalim",
+            name: "imad chugtai",
             reason: "death",
             sessionType: "3",
           },
@@ -55,7 +55,7 @@ function DashboardChart() {
         },
         {
           client: {
-            name: "Zaalim",
+            name: "imad chugtai",
             reason: "death",
             sessionType: "3",
           },
@@ -69,7 +69,7 @@ function DashboardChart() {
       schedule: [
         {
           client: {
-            name: "Zaalim",
+            name: "imad chugtai",
             reason: "death",
             sessionType: "3",
           },
@@ -81,7 +81,7 @@ function DashboardChart() {
         },
         {
           client: {
-            name: "Zaalim",
+            name: "imad chugtai",
             reason: "death",
             sessionType: "3",
           },
@@ -95,7 +95,7 @@ function DashboardChart() {
       schedule: [
         {
           client: {
-            name: "Zaalim",
+            name: "imad chugtai",
             reason: "death",
             sessionType: "3",
           },
@@ -113,7 +113,7 @@ function DashboardChart() {
       schedule: [
         {
           client: {
-            name: "Zaalim",
+            name: "imad chugtai",
             reason: "death",
             sessionType: "3",
           },
@@ -122,7 +122,7 @@ function DashboardChart() {
         },
         {
           client: {
-            name: "Zaalim",
+            name: "imad chugtai",
             reason: "death",
             sessionType: "3",
           },
@@ -131,7 +131,7 @@ function DashboardChart() {
         },
         {
           client: {
-            name: "Zaalim",
+            name: "imad chugtai",
             reason: "death",
             sessionType: "3",
           },
@@ -148,7 +148,7 @@ function DashboardChart() {
       schedule: [
         {
           client: {
-            name: "Zaalim",
+            name: "imad chugtai",
             reason: "death",
             sessionType: "3",
           },
@@ -157,7 +157,7 @@ function DashboardChart() {
         },
         {
           client: {
-            name: "Zaalim",
+            name: "imad chugtai",
             reason: "death",
             sessionType: "3",
           },
@@ -166,7 +166,7 @@ function DashboardChart() {
         },
         {
           client: {
-            name: "Zaalim",
+            name: "imad chugtai",
             reason: "death",
             sessionType: "3",
           },
