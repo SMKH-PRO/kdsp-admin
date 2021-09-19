@@ -12,6 +12,8 @@ import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import Awaiting from '../Screen/Awaiting';
+import { AccessTime } from "@mui/icons-material";
+
 export const homePath = "/";
 
 export const loginPath = "/login";
@@ -64,8 +66,8 @@ const ROUTES = [
     component: (props) => <Awaiting {...props} />,
     visibleInSidebar: true,
     authRequired: true,
-    icon: AssignmentIndIcon,
-    exact:true
+    icon: AccessTime,
+    exact: true
   },
   {
     title: "Schedules",

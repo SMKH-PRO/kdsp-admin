@@ -2,16 +2,19 @@ import React, { useState } from 'react';
 
 import { Table } from 'antd';
 import { arrayMove, sortableContainer, sortableElement, sortableHandle } from 'react-sortable-hoc';
-import { MenuOutlined } from '@ant-design/icons';
 import "./index.css"
 import "antd/dist/antd.css";
 import { AddCircle, Delete, DragIndicator, Edit, Check } from '@mui/icons-material';
 import { IconButton, Tooltip } from '@mui/material';
+import { isNull, longTimeFormat } from '../../Utils/helpers';
+import { Button } from '@mui/material';
+import { useSelector } from 'react-redux';
+
 
 const DragHandle = sortableHandle(() => <DragIndicator style={{ cursor: 'grab', color: '#999' }} />);
 const addToWaitingList = (
     <div>
-        <Tooltip title="Add More Patients To Waiting List.F">
+        <Tooltip arrow title="Add More Patients To Waiting List.">
             <IconButton
                 className="NoMargin NoPadding"
                 onClick={() => alert("Coming Soon!")}>
@@ -23,75 +26,84 @@ const addToWaitingList = (
 
 const actionButtons = () => (
     <div className="row">
-        <Edit />
-        <Delete />
-        <Check />
+        <IconButton className="myTableActions" size="small">
+            <Edit className="increaseFontSizeOnHover" color="primary" size />
+        </IconButton>
+
+        <IconButton>
+            <Delete className="increaseFontSizeOnHover" color="warning" />
+        </IconButton>
+
+        <IconButton>
+            <Check className="increaseFontSizeOnHover" color="success" />
+        </IconButton>
 
     </div>
 )
-const columns = [
-    {
-        title: addToWaitingList,
-        dataIndex: 'sort',
-        width: 30,
-        className: 'drag-visible',
-        render: () => <DragHandle />,
-    },
-    {
-        title: 'Name',
-        dataIndex: 'name',
-        className: 'drag-visible',
-    },
-    {
-        title: 'Age',
-        dataIndex: 'age',
-    },
-    {
-        title: 'Address',
-        dataIndex: 'address',
-    },
-    {
-        title: "Actions",
-        dataIndex: 'sort',
-        width: 30,
-        className: 'drag-visible',
-        render: actionButtons,
-    },
-];
-
-const data = [
-    {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-        index: 0,
-    },
-    {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-        index: 1,
-    },
-    {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sidney No. 1 Lake Park',
-        index: 2,
-    },
 
 
-
-];
 
 const SortableItem = sortableElement(props => <tr {...props} />);
 const SortableContainer = sortableContainer(props => <tbody {...props} />);
 
 const SortableTable = () => {
+    const dataSource = useSelector(state => (state?.waitListReducer?.waitList || []))
+    console.log("REDUX", state)
 
-    const [dataSource, setDataSource] = useState(data)
+
+    const columns = [
+        {
+            title: addToWaitingList,
+            dataIndex: 'sort',
+            width: 30,
+            className: 'drag-visible',
+            render: () => <DragHandle />,
+
+        },
+
+        {
+            title: 'Patient Name',
+            dataIndex: 'name',
+            className: 'drag-visible',
+        },
+        {
+            title: 'Age',
+            dataIndex: 'age',
+        },
+        {
+            title: 'Phone',
+            dataIndex: 'phone',
+            render: (text) => <a href={`tel:${text}`}>{text}</a>,
+
+        },
+        {
+            title: 'Therapy Type',
+            dataIndex: 'type',
+        },
+        {
+            title: 'Patient Feedback',
+            dataIndex: 'feedback',
+            render: (text, record) => (
+
+                !isNull(text) ?
+                    (<span >{text}</span>)
+                    :
+                    (<Button color="primary">Add Feedback  </Button>)
+            )
+        },
+        {
+            title: 'Date Updated',
+            dataIndex: 'date',
+            render: (text) => (<Tooltip arrow title={`${longTimeFormat(new Date().getTime())}`} ><span >{text}</span></Tooltip>)
+        },
+        {
+            title: "Actions",
+            dataIndex: 'actions',
+            width: 30,
+            className: 'drag-visible',
+            render: actionButtons,
+        },
+    ];
 
     const onSortEnd = ({ oldIndex, newIndex }) => {
         if (oldIndex !== newIndex) {
