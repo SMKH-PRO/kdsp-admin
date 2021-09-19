@@ -8,15 +8,46 @@ import Autocomplete from "@mui/material/Autocomplete";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import TimePicker from "@mui/lab/TimePicker";
+import { message } from "antd";
+import { ADD_DOCTOR_AVAILABILITY } from "./../Redux/Types";
 
+import { useDispatch } from "react-redux";
 const DoctorDetails = ({}) => {
   const { id } = useParams();
+  const dispatch = useDispatch();
   const doctor = useSelector((state) =>
     state.doctorReducer.doctors.find((v) => v.id === id)
+  );
+  const doctorAvailibilty = useSelector(
+    (state) => state.doctorReducer.doctorAvailibilty
   );
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [day, setDay] = useState("");
+
+  const onSubmit = () => {
+    try {
+      const obj = {
+        startDate,
+        endDate,
+        day,
+        doctorId: id
+      };
+      console.log(obj, "opopopopop");
+      dispatch({
+        type: ADD_DOCTOR_AVAILABILITY,
+        payload: [...doctorAvailibilty ||  [], obj],
+      });
+      message.success("Availability Added Successfully");
+      setStartDate("");
+      setEndDate("");
+      setDay("");
+    } catch (error) {
+      message.error(error.message);
+    }
+  };
+
+  console.log(doctor, 'doctor')
   return (
     <div>
       <Header title="Doctor details" />
@@ -81,7 +112,15 @@ const DoctorDetails = ({}) => {
                   </LocalizationProvider>
                 </Grid>
                 <Grid item xs={12} align="right">
-                  <Button variant="contained" color="primary" size="large" fullWidth>Add Time</Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    fullWidth
+                    onClick={onSubmit}
+                  >
+                    Add Time
+                  </Button>
                 </Grid>
               </Grid>
             </Paper>
