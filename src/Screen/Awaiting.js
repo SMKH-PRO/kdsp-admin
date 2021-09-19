@@ -13,8 +13,7 @@ const useStyles = makeStyles({
 const Awaiting = () => {
     return (
         <div className="content-container">
-            <Header />
-            <h1>Waiting List</h1>
+            <Header title="Waiting List" />
             <SortableTable />
         </div>
     )
