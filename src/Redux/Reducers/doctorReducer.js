@@ -24,14 +24,14 @@ const initialState = {
       ocupation: ["Speech Therapy"],
     },
   ],
-  doctorAvaility: [],
+  doctorAvailibility: [],
 };
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_DOCTOR:
       return { ...state, doctors: action.payload };
     case ADD_DOCTOR_AVAILABILITY:
-      return { ...state, doctorAvaility: action.payload };
+      return { ...state, doctorAvailibility: action.payload };
 
     default:
       return state;
