@@ -46,11 +46,14 @@ const AddWaitList = ({ onClose, selectedRow, dataSource }) => {
 
 
     const submit = () => {
+        let newId = uuidv4()
         let object = {
-            id: selectedRow?.id || uuidv4(),
+            id: selectedRow?.id || newId,
+            key: selectedRow?.id || newId,
             index: selectedRow?.index || dataSource?.length - 1,
             name, age, phone, type,
             date: new Date().getTime()
+
         }
         if (!isEdit) {
             dispatch(addWaitListObj(object, dataSource))
