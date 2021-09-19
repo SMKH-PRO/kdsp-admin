@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Table } from 'antd';
+import { Popconfirm, Table } from 'antd';
 import { arrayMove, sortableContainer, sortableElement, sortableHandle } from 'react-sortable-hoc';
 import "./index.css"
 import "antd/dist/antd.css";
@@ -13,6 +13,8 @@ import { deleteFromWaitList, setWaitList } from '../../Redux/Actions/waitListAct
 import { useDispatch } from 'react-redux';
 import AddWaitList from './Add';
 import FeedbackForm from './Feedback';
+import { Link } from 'react-router-dom';
+import { addSchedulesPath } from '../../Navigation/routes';
 
 const DragHandle = sortableHandle(() => <DragIndicator style={{ cursor: 'grab', color: '#999' }} />);
 
@@ -57,14 +59,17 @@ const SortableTable = () => {
             <IconButton onClick={() => handleEdit(record)} className="myTableActions" size="small">
                 <Edit className="increaseFontSizeOnHover" color="primary" size />
             </IconButton>
+            <Popconfirm okText='Yes' title="Sure to delete?" onConfirm={() => handleDelete(record?.id)}>
+                <IconButton >
+                    <Delete className="increaseFontSizeOnHover" color="warning" />
+                </IconButton>
+            </Popconfirm>
 
-            <IconButton onClick={handleDelete}>
-                <Delete className="increaseFontSizeOnHover" color="warning" />
-            </IconButton>
-
-            <IconButton>
-                <Check className="increaseFontSizeOnHover" color="success" />
-            </IconButton>
+            <Link to={`${addSchedulesPath}?clientId=${record?.id}`}>
+                <IconButton>
+                    <Check className="increaseFontSizeOnHover" color="success" />
+                </IconButton>
+            </Link>
 
         </div>
     )
@@ -144,7 +149,7 @@ const SortableTable = () => {
             useDragHandle
             disableAutoscroll
             helperClass="row-dragging"
-            onSortEnd={onSortEnd}
+            onSortEnd={onSortEnd} 
             {...props}
         />
     );

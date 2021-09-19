@@ -14,6 +14,7 @@ import { addWaitListObj, updateWaitListObj } from '../../Redux/Actions/waitListA
 import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { ConditionalTooltip } from '../../Utils/helpers';
+import { arrayMove } from 'react-sortable-hoc';
 
 /**
  * 

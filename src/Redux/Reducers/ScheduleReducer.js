@@ -7,7 +7,7 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_SCHEDULE:
-      return { ...state, schedules: [...state.schedules, action.payload] };
+      return { ...state, schedules: action.payload };
     default:
       return state;
   }
