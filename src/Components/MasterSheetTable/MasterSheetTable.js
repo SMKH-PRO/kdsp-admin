@@ -11,8 +11,6 @@ import { useSelector } from 'react-redux';
 import { setWaitList } from '../../Redux/Actions/waitListActions';
 import { useDispatch } from 'react-redux';
 
-const DragHandle = sortableHandle(() => <DragIndicator style={{ cursor: 'grab', color: '#999' }} />);
-
 const actionButtons = () => (
     <div className="row">
         <IconButton className="myTableActions" size="small">
@@ -44,7 +42,7 @@ const MasterSheetTable = () => {
             date: '11/10/2021'
         }
     ]
-    console.log("REDUX", dataSource)
+    console.log("REDUX", useSelector(state => state))
 
     const [selectedRow, setSelectedRow] = useState({})
     const [openFeedbackForm, setOpenFeedbackForm] = useState(false)
@@ -65,6 +63,13 @@ const MasterSheetTable = () => {
     )
 
     const columns = [
+        {
+            title: addToWaitingList,
+            dataIndex: 'sort',
+            width: 30,
+            className: 'drag-visible',
+            render: () => <>&nbsp;</>,
+        },
         {
             title: 'Client Name',
             dataIndex: 'name',
