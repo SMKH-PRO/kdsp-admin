@@ -8,6 +8,7 @@ import AddSchedule from "./AddSchedule";
 import AddDoctor from "./AddDoctor";
 import DoctorDetails from "./DoctorDetails";
 import NotFound404 from "./Errors/NotFound404";
+import MasterSheet from './MasterSheet'
 
 export {
   Home,
@@ -20,4 +21,5 @@ export {
   AddSchedule,
   NotFound404,
   DoctorDetails,
+  MasterSheet
 };
