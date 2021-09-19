@@ -9,6 +9,8 @@ import { IconButton, Tooltip } from '@mui/material';
 import { isNull, longTimeFormat } from '../../Utils/helpers';
 import { Button } from '@mui/material';
 import { useSelector } from 'react-redux';
+import { setWaitList } from '../../Redux/Actions/waitListActions';
+import { useDispatch } from 'react-redux';
 
 
 const DragHandle = sortableHandle(() => <DragIndicator style={{ cursor: 'grab', color: '#999' }} />);
@@ -47,10 +49,14 @@ const SortableItem = sortableElement(props => <tr {...props} />);
 const SortableContainer = sortableContainer(props => <tbody {...props} />);
 
 const SortableTable = () => {
+    const dispatch = useDispatch()
     const dataSource = useSelector(state => (state?.waitListReducer?.waitList || []))
-    console.log("REDUX", state)
+    console.log("REDUX", dataSource)
 
 
+
+    const setDataSource = (d) => dispatch(setWaitList(d))
+    
     const columns = [
         {
             title: addToWaitingList,
