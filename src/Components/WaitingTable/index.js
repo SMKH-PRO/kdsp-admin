@@ -65,7 +65,7 @@ const SortableTable = () => {
                 </IconButton>
             </Popconfirm>
 
-            <Link to={`${addSchedulesPath}?clientId=${record?.id}`}>
+            <Link to={`${addSchedulesPath}/${record?.id}`}>
                 <IconButton>
                     <Check className="increaseFontSizeOnHover" color="success" />
                 </IconButton>

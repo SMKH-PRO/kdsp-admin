@@ -102,9 +102,7 @@ const AddSchedule = () => {
 
         dispatch(addSchedule(newArr))
 
-        setLoading(false)
-
-        // console.log("schedulesArr=====>", schedulesArr)
+        setLoading(false);
 
       }
 

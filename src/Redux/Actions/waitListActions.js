@@ -24,6 +24,7 @@ export const updateWaitListObj = (newWaitListObj, waitListState) => {
     const newData = arrayMove([].concat(newWaitList), newWaitList.length, originalIndex)?.filter(el => !!el);
 
     // console.log("newWaitList", newWaitList)
+    
     return setWaitList(newData)
 }
 
