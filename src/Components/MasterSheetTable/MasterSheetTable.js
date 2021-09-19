@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import { Table } from 'antd';
 import { arrayMove, sortableContainer, sortableElement, sortableHandle } from 'react-sortable-hoc';
 import "./index.css"
@@ -9,21 +8,42 @@ import { IconButton, Tooltip } from '@mui/material';
 import { ConditionalTooltip, fakeLoading, isNull, longTimeFormat } from '../../Utils/helpers';
 import { Button } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { deleteFromWaitList, setWaitList } from '../../Redux/Actions/waitListActions';
+import { setWaitList } from '../../Redux/Actions/waitListActions';
 import { useDispatch } from 'react-redux';
-import AddWaitList from './Add';
-import FeedbackForm from './Feedback';
 
 const DragHandle = sortableHandle(() => <DragIndicator style={{ cursor: 'grab', color: '#999' }} />);
 
+const actionButtons = () => (
+    <div className="row">
+        <IconButton className="myTableActions" size="small">
+            <Edit className="increaseFontSizeOnHover" color="primary" size />
+        </IconButton>
 
+        <IconButton>
+            <Delete className="increaseFontSizeOnHover" color="warning" />
+        </IconButton>
+
+        <IconButton>
+            <Check className="increaseFontSizeOnHover" color="success" />
+        </IconButton>
+    </div>
+)
 
 const SortableItem = sortableElement(props => <tr {...props} />);
 const SortableContainer = sortableContainer(props => <tbody {...props} />);
 
-const SortableTable = () => {
+const MasterSheetTable = () => {
     const dispatch = useDispatch()
-    const dataSource = useSelector(state => (state?.waitListReducer?.waitList || []))
+    const dataSource = [
+        {
+            name: 'Ali',
+            age: 4,
+            schedule: '11/10/2021',
+            therapist: 'Dr Shehzad',
+            type: 'Occupational Therapy',
+            date: '11/10/2021'
+        }
+    ]
     console.log("REDUX", dataSource)
 
     const [selectedRow, setSelectedRow] = useState({})
@@ -36,52 +56,17 @@ const SortableTable = () => {
         <div>
             <Tooltip arrow title="Add More Patients To Waiting List.">
                 <IconButton
-
                     className="NoMargin NoPadding"
-                    onClick={() => { setSelectedRow({}); setOpenAddForm(true) }}>
+                    onClick={() => setOpenAddForm(true)}>
                     <AddCircle />
                 </IconButton>
             </Tooltip>
         </div>
     )
 
-    const handleDelete = (id) => {
-        dispatch(deleteFromWaitList(id, dataSource))
-    }
-    const handleEdit = (obj) => {
-        setSelectedRow(obj)
-        setOpenAddForm(true)
-    }
-    const actionButtons = (index, record) => (
-        <div className="row">
-            <IconButton onClick={() => handleEdit(record)} className="myTableActions" size="small">
-                <Edit className="increaseFontSizeOnHover" color="primary" size />
-            </IconButton>
-
-            <IconButton onClick={handleDelete}>
-                <Delete className="increaseFontSizeOnHover" color="warning" />
-            </IconButton>
-
-            <IconButton>
-                <Check className="increaseFontSizeOnHover" color="success" />
-            </IconButton>
-
-        </div>
-    )
-
-
     const columns = [
         {
-            title: addToWaitingList,
-            dataIndex: 'sort',
-            width: 30,
-            className: 'drag-visible',
-            render: () => <DragHandle />,
-
-        },
-
-        {
-            title: 'Patient Name',
+            title: 'Client Name',
             dataIndex: 'name',
             className: 'drag-visible',
         },
@@ -90,53 +75,33 @@ const SortableTable = () => {
             dataIndex: 'age',
         },
         {
-            title: 'Phone',
-            dataIndex: 'phone',
-            render: (text) => <a href={`tel:${text}`}>{text}</a>,
-
+            title: 'Schedule',
+            dataIndex: 'schedule',
+            render: (text) => <a>{text}</a>,
         },
         {
-            title: 'Therapy Type',
+            title: 'Therapist',
+            dataIndex: 'therapist'
+        },
+        {
+            title: 'Therapy Status',
             dataIndex: 'type',
         },
         {
-            title: 'Patient Feedback',
-            dataIndex: 'feedback',
-            render: (text, record) => {
-                let click = () => { setSelectedRow(record); setOpenFeedbackForm(true) }
-
-                if (!isNull(text)) {
-                    let isLargeText = Boolean(text?.length > 30)
-                    return (
-                        <ConditionalTooltip show={isLargeText} title={text}>
-                            <span style={{ cursor: "pointer" }} onClick={click} >{isLargeText ? text?.substr(0, 30) + "..." : text}</span>
-                        </ConditionalTooltip>
-                    )
-                }
-
-                return <Button onClick={click} color="primary">Add Feedback  </Button>
-            }
+            title: 'Payment',
+            dataIndex: 'type',
         },
         {
             title: 'Date Updated',
             dataIndex: 'date',
             render: (text) => (<Tooltip arrow title={`${longTimeFormat(text)}`} ><span >{new Date(text).toLocaleDateString()}</span></Tooltip>)
-        },
-        {
-            title: "Actions",
-            dataIndex: 'actions',
-            width: 30,
-            className: 'drag-visible',
-            render: actionButtons,
-        },
+        }
     ];
 
     const onSortEnd = ({ oldIndex, newIndex }) => {
         if (oldIndex !== newIndex) {
             const newData = arrayMove([].concat(dataSource), oldIndex, newIndex)?.filter(el => !!el);
             console.log('Sorted items: ', newData);
-            setDataSource(null);
-
             setDataSource(newData);
         }
     };
@@ -157,9 +122,7 @@ const SortableTable = () => {
         return <SortableItem index={index} {...restProps} />;
     };
 
-
     return (
-
         <>
             <Table
                 pagination={{ hideOnSinglePage: true, pageSize: 10 }}
@@ -173,12 +136,8 @@ const SortableTable = () => {
                     },
                 }}
             />
-            {openAddForm && <AddWaitList onClose={setOpenAddForm} dataSource={dataSource} selectedRow={selectedRow} />}
-            {openFeedbackForm && <FeedbackForm dataSource={dataSource} selectedRow={selectedRow} onClose={setOpenFeedbackForm} />}
-
         </>
     );
-
 }
 
-export default SortableTable
+export default MasterSheetTable

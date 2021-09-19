@@ -1,0 +1,21 @@
+.row-dragging {
+  background: #fafafa;
+  border: 1px solid #ccc;
+}
+
+.row-dragging td {
+  padding: 16px;
+}
+
+.row-dragging .drag-visible {
+  visibility: visible;
+}
+
+.increaseFontSizeOnHover {
+  transition: all 1000ms ease !important;
+}
+
+.increaseFontSizeOnHover:hover {
+  font-size: 30px;
+}
+
