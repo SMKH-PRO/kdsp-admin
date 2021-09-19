@@ -21,13 +21,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { ADD_DOCTOR } from "../Redux/Types";
 import { v4 as uuidv4 } from 'uuid';
 
+import { OT, PT, ST } from '../Utils/constants';
 const useStyles = makeStyles({
   paper: {
     padding: 20,
   },
 });
-const names = ["Occupational Therapy", "Physical Therapy", "Speech Therapy"];
 
+
+const names = [
+  OT,
+  PT,
+  ST
+]
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
