@@ -5,7 +5,8 @@ import {
   Clients,
   Schedule,
   AddSchedule,
-  AddDoctor
+  AddDoctor,
+  DoctorDetails
 } from "./../Screen";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
@@ -23,6 +24,7 @@ export const doctorsPath = "/doctors";
 export const adddoctorsPath = "/add-doctors";
 export const schedulesPath = "/schedules";
 export const addSchedulesPath = "/add-schedule";
+export const doctorDetailsPath = "/doctor-details";
 
 const ROUTES = [
   {
@@ -91,6 +93,15 @@ const ROUTES = [
     title: "Add Doctor",
     path: adddoctorsPath,
     component: (props) => <AddDoctor {...props} />,
+    visibleInSidebar: false,
+    authRequired: true,
+    icon: DateRangeIcon,
+    exact: true,
+  },
+  {
+    title: "Doctor Details",
+    path: doctorDetailsPath,
+    component: (props) => <DoctorDetails {...props} />,
     visibleInSidebar: false,
     authRequired: true,
     icon: DateRangeIcon,
