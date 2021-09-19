@@ -26,6 +26,7 @@ export const awaitingPath = "/awaiting"
 export const doctorsPath = "/doctors";
 export const adddoctorsPath = "/add-doctors";
 export const schedulesPath = "/schedules";
+export const addSchedulesPathWithId = "/add-schedule/:id";
 export const addSchedulesPath = "/add-schedule";
 export const doctorDetailsPath = "/doctor-details/:id";
 export const masterSheetPath = "/master-sheet";
@@ -87,6 +88,15 @@ const ROUTES = [
   {
     title: "Add Schedules",
     path: addSchedulesPath,
+    component: (props) => <AddSchedule {...props} />,
+    visibleInSidebar: false,
+    authRequired: true,
+    icon: DateRangeIcon,
+    exact: true,
+  },
+  {
+    title: "Add Schedules",
+    path: addSchedulesPathWithId,
     component: (props) => <AddSchedule {...props} />,
     visibleInSidebar: false,
     authRequired: true,

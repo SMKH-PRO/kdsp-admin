@@ -5,6 +5,7 @@ import userReducer from "./Reducers/userReducer";
 import waitListReducer from "./Reducers/waitListReducer";
 import doctorReducer from "./Reducers/doctorReducer";
 import ScheduleReducer from "./Reducers/ScheduleReducer";
+import clientReducer from "./Reducers/clientReducer";
 
 import { persistStore, persistReducer } from "redux-persist";
 import msheetReducer from "./Reducers/msheetReducer";
@@ -18,7 +19,8 @@ let rootReducer = combineReducers({
   waitListReducer,
   doctorReducer,
   ScheduleReducer,
-  msheetReducer
+  msheetReducer,
+  clientReducer
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = createStore(persistedReducer);
