@@ -81,18 +81,6 @@ const AddMasterSheet = ({ onClose, dataSource }) => {
                     autoFocus
                     margin="dense"
                     id="name"
-                    label="Patient Age"
-                    type="number"
-                    value={age}
-                    fullWidth
-                    onChange={e => setAge(e.target.value)}
-
-                    variant="outlined"
-                />
-                <TextField
-                    autoFocus
-                    margin="dense"
-                    id="name"
                     label="Phone Number"
                     value={phone}
                     onChange={e => setPhone(e.target.value?.replace?.(/[^0-9]/g, ''))}
