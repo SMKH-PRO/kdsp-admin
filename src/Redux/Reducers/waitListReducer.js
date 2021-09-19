@@ -3,6 +3,8 @@ const initialWaitlist = [
 
   {
     "id": "338186de-7335-41b8-81ab-37d1c9c8807f",
+    "key": "338186de-7335-41b8-81ab-37d1c9c8807f",
+
     "index": 0,
     "name": "Kamran",
     "age": "12",
@@ -12,6 +14,8 @@ const initialWaitlist = [
   },
   {
     "id": "67c71366-19f2-4917-941d-a637c36eecd7",
+    "key": "67c71366-19f2-4917-941d-a637c36eecd7",
+
     "index": 1,
     "name": "Umar Akmal",
     "age": "14",
@@ -21,6 +25,8 @@ const initialWaitlist = [
   },
   {
     "id": "aec1cf02-0d9d-4d30-9fcf-9e930452358d",
+    "key": "aec1cf02-0d9d-4d30-9fcf-9e930452358d",
+
     "index": 2,
     "name": "Noman Malik ",
     "age": "14",
