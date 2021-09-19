@@ -19,6 +19,8 @@ import { message, } from 'antd';
 
 import { useDispatch, useSelector } from "react-redux";
 import { ADD_DOCTOR } from "../Redux/Types";
+import { v4 as uuidv4 } from 'uuid';
+
 const useStyles = makeStyles({
   paper: {
     padding: 20,
@@ -77,6 +79,7 @@ const AddDoctor = () => {
         email,
         phoneNumber,
         location,
+        id: uuidv4()
       };
       if (!obj.ocupation.length) {
         errorObj.ocupation = "ocupation is required";
