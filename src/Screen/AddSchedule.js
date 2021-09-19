@@ -119,8 +119,8 @@ const AddSchedule = (props) => {
           clientName: client?.label || onlyClient?.label,
           clientId: client?.id || onlyClient?.id,
           status: "Scheduled",
-          startTime: "8945982",
-          endTime: "jndjfnj",
+          startTime: timeAvailable.startDate,
+          endTime: timeAvailable.endDate,
           sessionType: therapyType,
           id: uuidv4(),
         };

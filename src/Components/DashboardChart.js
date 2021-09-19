@@ -7,6 +7,7 @@ function DashboardChart() {
   const doctorAvailibility = useSelector(
     (state) => state.doctorReducer.doctorAvailibility
   );
+  const schedules = useSelector((store) => store?.ScheduleReducer?.schedules)
 
   useEffect(() => {
     let finalArr = [];
@@ -15,8 +16,14 @@ function DashboardChart() {
         data: { name: doc.name, location: doc.location },
         schedule: []
       };
-      let scheduleFiltered = doctorAvailibility.filter(ava => {
-
+      let scheduleFiltered = schedules.filter(ava => {
+        console.log(ava, 'askdjksa')
+        return ava.doctorName?.id === doctors.id
+      }).map(v => {
+          return {
+              client: {name: v.clientName},
+              time: 1234
+          }
       })
     });
   }, []);
