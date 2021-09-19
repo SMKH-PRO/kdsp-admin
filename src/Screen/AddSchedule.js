@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Container, TextField, Paper, Grid, Button, CircularProgress } from "@mui/material";
 import { Header } from "./../Components";
@@ -10,6 +10,7 @@ import { OT, PT, ST } from '../Utils/constants';
 import { addSchedule } from "../Redux/Actions/schduleActions";
 import { v4 as uuidv4 } from 'uuid';
 import { fakeLoading } from "../Utils/helpers";
+import { useParams } from "react-router-dom";
 
 let therapyListArr = [
   OT,
@@ -22,23 +23,22 @@ const useStyles = makeStyles({
     padding: 20,
   },
 });
+
 const AddSchedule = () => {
+  const { id } = useParams();
+
+  console.log("id=======>", id)
+
   const classes = useStyles();
   const dispatch = useDispatch();
 
   const schedulesArr = useSelector((store) => store?.ScheduleReducer?.schedules);
   const dataSource = useSelector(state => (state?.waitListReducer?.waitList || []))
 
-  console.log("dataSource==>", dataSource);
-
-  let clientsArr = dataSource.map((d) => ({
-    label: d?.name,
-    id: d?.id
-  }));
-
-  console.log("clientsArr==>", clientsArr);
-
-
+  // let clientsArr = dataSource.map((d) => ({
+  //   label: d?.name,
+  //   id: d?.id
+  // }));
 
   const [doctor, setDoctor] = useState(null);
   const [timeAvailable, setTimeAvailable] = useState(null);
@@ -47,9 +47,34 @@ const AddSchedule = () => {
   const [note, setNote] = useState("");
   const [therapyType, setTherapyType] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const [onlyClient, setonlyClient] = useState('');
+  const [clientsArr, setclientsArr] = useState([]);
 
   const [errors, setErrors] = useState({});
+
+
+  useEffect(() => {
+    if (id) {
+
+      let clientObj = dataSource.find((d) => d?.id == id);
+
+      let newObj = {
+        label: clientObj?.name,
+        id: clientObj?.id
+      }
+
+      setonlyClient(newObj)
+    } else {
+      setonlyClient('')
+      let clientsArrrr = dataSource.map((d) => ({
+        label: d?.name,
+        id: d?.id
+      }));
+      console.log("clientsArrrr-->", clientsArrrr)
+      setclientsArr([...clientsArrrr])
+    }
+  }, [])
+
   const onSubmit = async () => {
     let obj = {
       doctor,
@@ -60,7 +85,7 @@ const AddSchedule = () => {
     };
 
     let errorObj = {};
-    console.log(obj, "obj");
+
     try {
       if (!obj.doctor) {
         errorObj.doctor = "doctor must be selected";
@@ -71,7 +96,7 @@ const AddSchedule = () => {
       if (!obj.scheduleType) {
         errorObj.scheduleType = "schedule type must be selected";
       }
-      if (!obj.client) {
+      if (!obj.client && !onlyClient) {
         errorObj.client = "client must be selected";
       }
 
@@ -80,14 +105,16 @@ const AddSchedule = () => {
         return;
       } else {
 
+
+
         setLoading(true)
 
         await fakeLoading()
 
         let scheduleObj = {
           doctorName: doctor,
-          clientName: client?.label,
-          clientId: client?.id,
+          clientName: client?.label || onlyClient?.label,
+          clientId: client?.id || onlyClient?.id,
           status: "Scheduled",
           startTime: "8945982",
           endTime: "jndjfnj",
@@ -99,6 +126,8 @@ const AddSchedule = () => {
         console.log("schedulesArr===>", schedulesArr)
 
         let newArr = [...schedulesArr, scheduleObj];
+
+        console.log("new arra", newArr)
 
         dispatch(addSchedule(newArr))
 
@@ -185,17 +214,18 @@ const AddSchedule = () => {
               <Autocomplete
                 disablePortal
                 id="combo-box-demo"
-                options={clientsArr}
+                disabled={onlyClient ? true : false}
+                options={onlyClient || clientsArr}
                 renderInput={(params) => (
                   <TextField
                     {...params}
                     label="Client"
-                    error={Boolean(errors.client)}
-                    helperText={errors.client}
+                    error={onlyClient ? false : Boolean(errors.client)}
+                    helperText={onlyClient ? false : errors.client}
                   />
                 )}
                 fullWidth={true}
-                value={client}
+                value={onlyClient || client}
                 onChange={(event, newValue) => {
                   setClient(newValue);
                 }}
