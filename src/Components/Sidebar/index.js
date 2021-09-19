@@ -19,7 +19,7 @@ const SideBar = ({ children, ...props }) => {
         <div className="sidebar-btn-container">
           {filteredRoute.map((route) => {
             return (
-              <div className="sidebar-btn">
+              <div key={route?.path} className="sidebar-btn">
                 <IconButton
                   aria-label="delete"
                   size="large"

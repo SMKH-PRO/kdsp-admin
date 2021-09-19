@@ -33,11 +33,6 @@ const DoctorCard = ({ data, containerXs }) => {
               <Grid item xs={12}>
                 <b>Location:</b> {data.location}
               </Grid>
-              <Grid item>
-                {data?.ocupation?.map((v) => {
-                  return <Chip label={v} />;
-                })}
-              </Grid>
             </Grid>
           </Grid>
         </Grid>

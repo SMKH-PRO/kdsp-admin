@@ -10,6 +10,7 @@ import { Button } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { setWaitList } from '../../Redux/Actions/waitListActions';
 import { useDispatch } from 'react-redux';
+import AddMasterSheet from './AddMasterSheet'
 
 const actionButtons = () => (
     <div className="row">
@@ -42,7 +43,7 @@ const MasterSheetTable = () => {
             date: '11/10/2021'
         }
     ]
-    console.log("REDUX", useSelector(state => state))
+    console.log("REDUX", useSelector(state => state?.waitListReducer?.waitList))
 
     const [selectedRow, setSelectedRow] = useState({})
     const [openFeedbackForm, setOpenFeedbackForm] = useState(false)
@@ -141,6 +142,7 @@ const MasterSheetTable = () => {
                     },
                 }}
             />
+            {openAddForm && <AddMasterSheet onClose={setOpenAddForm} dataSource={dataSource} selectedRow={selectedRow} />}
         </>
     );
 }
