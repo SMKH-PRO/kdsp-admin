@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -14,30 +15,15 @@ import { addWaitListObj, updateWaitListObj } from '../../Redux/Actions/waitListA
 import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { ConditionalTooltip } from '../../Utils/helpers';
-import { arrayMove } from 'react-sortable-hoc';
 
-/**
- * 
- *  {
-    id: "random1",
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    phone: '+92 3484644919',
-    index: 0,
-    type: "Physical Therapy",
-    date: new Date().getTime()
-
-  },
- */
-const AddWaitList = ({ onClose, selectedRow, dataSource }) => {
+const AddMasterSheet = ({ onClose, dataSource }) => {
     const dispatch = useDispatch()
-    const isEdit = Boolean(selectedRow?.id)
-    const [name, setName] = useState(selectedRow?.name || "")
-    const [phone, setPhone] = useState(selectedRow?.phone || "")
+    const waitList = useSelector(state => state?.waitListReducer?.waitList) || []
+    const [name, setName] = useState("")
+    const [phone, setPhone] = useState("")
     const [countryCode, setCountryCode] = useState("+92")
-    const [age, setAge] = useState(selectedRow?.age || "")
-    const [type, setType] = useState(selectedRow?.type || "")
+    const [age, setAge] = useState("")
+    const [type, setType] = useState("")
     const [loading, setLoading] = useState(false)
     const handleClose = () => {
         if (typeof onClose == "function") onClose(false)
@@ -46,45 +32,39 @@ const AddWaitList = ({ onClose, selectedRow, dataSource }) => {
 
 
     const submit = () => {
-        let newId = uuidv4()
         let object = {
-            id: selectedRow?.id || newId,
-            key: selectedRow?.id || newId,
-            index: selectedRow?.index || dataSource?.length - 1,
+            id: uuidv4(),
+            index: dataSource?.length - 1,
             name, age, phone, type,
             date: new Date().getTime()
-
         }
-        if (!isEdit) {
-            dispatch(addWaitListObj(object, dataSource))
-        }
-        else {
-            dispatch(updateWaitListObj(object, dataSource))
-
-        }
+        dispatch(addWaitListObj(object, dataSource))
 
         handleClose()
     }
 
 
 
-    const noChanges = selectedRow?.name == name && selectedRow?.phone == phone && selectedRow?.age == age && selectedRow?.type == type
-    const noData = !name?.length || !phone?.length || !age.length || !type.length
-
-    const disabledfeedbackbutton = noChanges || noData
-
     const loadingComp = loading && <span style={{ marginRight: 15 }}> <CircularProgress size={16} /></span>
 
     return (
 
         <Dialog open={true} onClose={handleClose}>
-            <DialogTitle>Add Patients</DialogTitle>
+            <DialogTitle>Add Client</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    Add patients to wait list.
+                    Client Name.
                 </DialogContentText>
 
-
+                <Select
+                    fullWidth
+                    placeholder="Client Name"
+                    value={type}
+                    label="Therapy"
+                    onChange={e => setType(e.target.value)}
+                >
+                    {waitList?.map((v, i) => <MenuItem value={v?.name} key={i}>{v?.name}</MenuItem>)}
+                </Select>
                 <TextField
                     autoFocus
                     margin="dense"
@@ -94,18 +74,6 @@ const AddWaitList = ({ onClose, selectedRow, dataSource }) => {
                     fullWidth
                     value={name}
                     onChange={e => setName(e.target.value)}
-
-                    variant="outlined"
-                />
-                <TextField
-                    autoFocus
-                    margin="dense"
-                    id="name"
-                    label="Patient Age"
-                    type="number"
-                    value={age}
-                    fullWidth
-                    onChange={e => setAge(e.target.value)}
 
                     variant="outlined"
                 />
@@ -138,10 +106,8 @@ const AddWaitList = ({ onClose, selectedRow, dataSource }) => {
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
-                <ConditionalTooltip show={disabledfeedbackbutton} title={"To submit, Please complete form!"}>
-                    <Button disabled={disabledfeedbackbutton} onClick={submit}>{loadingComp}{loading ? "Submiting..." : "Submit"}</Button>
-                </ConditionalTooltip>            </DialogActions>
+            </DialogActions>
         </Dialog>
     );
 }
-export default AddWaitList
+export default AddMasterSheet
