@@ -1,16 +1,6 @@
 import { SET_WAIT_LIST } from "../Types";
 const initialWaitlist = [
-  {
-    id: "random1",
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    phone: '+92 3484644919',
-    index: 0,
-    type: "Physical Therapy",
-    date: new Date().getTime()
 
-  },
 
 ]
 const initialState = {

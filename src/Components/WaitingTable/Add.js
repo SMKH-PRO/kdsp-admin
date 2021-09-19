@@ -9,8 +9,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { PT, OT, ST } from '../../Utils/constants';
-import { InputAdornment } from '@mui/material';
-import { updateWaitListObj } from '../../Redux/Actions/waitListActions';
+import { CircularProgress, InputAdornment } from '@mui/material';
+import { addWaitListObj, updateWaitListObj } from '../../Redux/Actions/waitListActions';
+import { useDispatch } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
+import { ConditionalTooltip } from '../../Utils/helpers';
 
 /**
  * 
@@ -26,20 +29,47 @@ import { updateWaitListObj } from '../../Redux/Actions/waitListActions';
 
   },
  */
-const AddWaitList = ({ onClose, selectedRow }) => {
+const AddWaitList = ({ onClose, selectedRow, dataSource }) => {
+    const dispatch = useDispatch()
     const isEdit = Boolean(selectedRow?.id)
     const [name, setName] = useState(selectedRow?.name || "")
     const [phone, setPhone] = useState(selectedRow?.phone || "")
     const [countryCode, setCountryCode] = useState("+92")
     const [age, setAge] = useState(selectedRow?.age || "")
     const [type, setType] = useState(selectedRow?.type || "")
+    const [loading, setLoading] = useState(false)
     const handleClose = () => {
         if (typeof onClose == "function") onClose(false)
     };
 
 
 
+    const submit = () => {
+        let object = {
+            id: selectedRow?.id || uuidv4(),
+            index: selectedRow?.index || dataSource?.length - 1,
+            name, age, phone, type,
+            date: new Date().getTime()
+        }
+        if (!isEdit) {
+            dispatch(addWaitListObj(object, dataSource))
+        }
+        else {
+            dispatch(updateWaitListObj(object, dataSource))
 
+        }
+
+        handleClose()
+    }
+
+
+
+    const noChanges = selectedRow?.name == name && selectedRow?.phone == phone && selectedRow?.age == age && selectedRow?.type == type
+    const noData = !name?.length || !phone?.length || !age.length || !type.length
+
+    const disabledfeedbackbutton = noChanges || noData
+
+    const loadingComp = loading && <span style={{ marginRight: 15 }}> <CircularProgress size={16} /></span>
 
     return (
 
@@ -104,8 +134,9 @@ const AddWaitList = ({ onClose, selectedRow }) => {
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
-                <Button onClick={handleClose}>Submit</Button>
-            </DialogActions>
+                <ConditionalTooltip show={disabledfeedbackbutton} title={"To submit, Please complete form!"}>
+                    <Button disabled={disabledfeedbackbutton} onClick={submit}>{loadingComp}{loading ? "Submiting..." : "Submit"}</Button>
+                </ConditionalTooltip>            </DialogActions>
         </Dialog>
     );
 }

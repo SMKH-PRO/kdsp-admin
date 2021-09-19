@@ -9,29 +9,12 @@ import { IconButton, Tooltip } from '@mui/material';
 import { ConditionalTooltip, fakeLoading, isNull, longTimeFormat } from '../../Utils/helpers';
 import { Button } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { setWaitList } from '../../Redux/Actions/waitListActions';
+import { deleteFromWaitList, setWaitList } from '../../Redux/Actions/waitListActions';
 import { useDispatch } from 'react-redux';
 import AddWaitList from './Add';
 import FeedbackForm from './Feedback';
 
 const DragHandle = sortableHandle(() => <DragIndicator style={{ cursor: 'grab', color: '#999' }} />);
-
-const actionButtons = () => (
-    <div className="row">
-        <IconButton className="myTableActions" size="small">
-            <Edit className="increaseFontSizeOnHover" color="primary" size />
-        </IconButton>
-
-        <IconButton>
-            <Delete className="increaseFontSizeOnHover" color="warning" />
-        </IconButton>
-
-        <IconButton>
-            <Check className="increaseFontSizeOnHover" color="success" />
-        </IconButton>
-
-    </div>
-)
 
 
 
@@ -55,12 +38,37 @@ const SortableTable = () => {
                 <IconButton
 
                     className="NoMargin NoPadding"
-                    onClick={() => setOpenAddForm(true)}>
+                    onClick={() => { setSelectedRow({}); setOpenAddForm(true) }}>
                     <AddCircle />
                 </IconButton>
             </Tooltip>
         </div>
     )
+
+    const handleDelete = (id) => {
+        dispatch(deleteFromWaitList(id, dataSource))
+    }
+    const handleEdit = (obj) => {
+        setSelectedRow(obj)
+        setOpenAddForm(true)
+    }
+    const actionButtons = (index, record) => (
+        <div className="row">
+            <IconButton onClick={() => handleEdit(record)} className="myTableActions" size="small">
+                <Edit className="increaseFontSizeOnHover" color="primary" size />
+            </IconButton>
+
+            <IconButton onClick={handleDelete}>
+                <Delete className="increaseFontSizeOnHover" color="warning" />
+            </IconButton>
+
+            <IconButton>
+                <Check className="increaseFontSizeOnHover" color="success" />
+            </IconButton>
+
+        </div>
+    )
+
 
     const columns = [
         {
@@ -127,6 +135,8 @@ const SortableTable = () => {
         if (oldIndex !== newIndex) {
             const newData = arrayMove([].concat(dataSource), oldIndex, newIndex)?.filter(el => !!el);
             console.log('Sorted items: ', newData);
+            setDataSource(null);
+
             setDataSource(newData);
         }
     };
@@ -163,7 +173,7 @@ const SortableTable = () => {
                     },
                 }}
             />
-            {openAddForm && <AddWaitList onClose={setOpenAddForm} />}
+            {openAddForm && <AddWaitList onClose={setOpenAddForm} dataSource={dataSource} selectedRow={selectedRow} />}
             {openFeedbackForm && <FeedbackForm dataSource={dataSource} selectedRow={selectedRow} onClose={setOpenFeedbackForm} />}
 
         </>
