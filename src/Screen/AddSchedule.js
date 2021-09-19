@@ -123,8 +123,6 @@ const AddSchedule = (props) => {
 
         let newArr = [...schedulesArr, scheduleObj];
 
-        console.log("new arra", newArr)
-
         dispatch(addSchedule(newArr))
 
         props.history.push(schedulesPath)

@@ -6,8 +6,13 @@ import { Header, ScheduleCard } from "./../Components";
 import { doctorSchedules } from "../data";
 import AddIcon from "@mui/icons-material/Add";
 import { addSchedulesPath } from "../Navigation/routes";
+import { useSelector } from "react-redux";
 
 const Schedule = (props) => {
+
+    const schedules = useSelector((store) => store?.ScheduleReducer?.schedules)
+    console.log("schedules==>", schedules)
+
     return (
         <div>
             <Header
@@ -33,7 +38,7 @@ const Schedule = (props) => {
 
                 <Grid container spacing={6}>
 
-                    {doctorSchedules.map((d, i) => {
+                    {schedules.map((d, i) => {
                         return <Grid item xs={12} sm={12} md={6} lg={4} xl={4} >
                             <ScheduleCard cardData={d} />
                         </Grid>

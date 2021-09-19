@@ -52,7 +52,7 @@ const ScheduleCard = ({ cardData }) => {
             <div className="sCardRightDiv">
 
 
-                <p style={{ margin: "0px", fontWeight: "bold" }}>{cardData?.doctorName}</p>
+                <p style={{ margin: "0px", fontWeight: "bold" }}>{cardData?.doctorName?.label}</p>
 
                 <p style={{ margin: "0px", color: 'grey' }}>{`Session of ${cardData?.sessionType} is set with ${cardData?.clientName}`}</p>
 
@@ -61,10 +61,10 @@ const ScheduleCard = ({ cardData }) => {
 
                     <p className={classes?.timeText}>12:00 - 13:00</p>
 
-                    <div style={{ display: "flex", alignItems: "center" }}>
+                    <div style={{ display: "flex", alignItems: "center", marginBottom: "-3px" }}>
 
                         <p className={classes?.timeText} style={{ display: "flex", alignItems: "center", margin: "0px" }}>Status:
-                            <p style={{ fontWeight: "bold", margin: "0px", color: cardData?.status == cancelled ? "red" : cardData?.status == completed ? "green" : theme?.palette?.primary?.main }}> {cardData?.status}</p>
+                            <p style={{ fontWeight: "bold", marginBottom: "0px", marginTop: "0px", marginRight: "0px", marginLeft: "3px", color: cardData?.status == cancelled ? "red" : cardData?.status == completed ? "green" : theme?.palette?.primary?.main }}> {cardData?.status}</p>
                         </p>
                     </div>
 
